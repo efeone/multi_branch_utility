@@ -3,6 +3,8 @@
 
 frappe.ui.form.on('Party Repayment', {
 	refresh(frm) {
+		erpnext.hide_company();
+		frm.events.show_general_ledger(frm);
 		frm.set_query("paid_from", function() {
 			frm.events.validate_company(frm);
 
@@ -123,6 +125,22 @@ frappe.ui.form.on('Party Repayment', {
 					}
 				}
 			});
+		}
+	},
+	show_general_ledger: function(frm) {
+		if(frm.doc.docstatus > 0) {
+			frm.add_custom_button(__('Ledger'), function() {
+				frappe.route_options = {
+					"voucher_no": frm.doc.reference_jv,
+					"from_date": frm.doc.posting_date,
+					"to_date": moment(frm.doc.modified).format('YYYY-MM-DD'),
+					"company": frm.doc.company,
+					"cost_center": frm.doc.cost_center,
+					"group_by": "",
+					"show_cancelled_entries": frm.doc.docstatus === 2
+				};
+				frappe.set_route("query-report", "General Ledger");
+			}, "fa fa-table");
 		}
 	},
 });
