@@ -45,3 +45,28 @@ def apply_additional_discount(doc, method):
 				journal_entry.save(ignore_permissions = True)
 				journal_entry.submit()
 				discount_amount = discount_amount - allocated_amount
+
+@frappe.whitelist()
+def get_last_si_rate(customer, item):
+	customer_si = frappe.db.get_all('Sales Invoice', filters={'customer': customer, 'docstatus': 1})
+	for si in customer_si:
+		sales_invoice = frappe.get_doc('Sales Invoice', si.name)
+		for si_item in sales_invoice.items :
+			if si_item.item_code == item:
+				return si_item.rate
+	return 0
+
+@frappe.whitelist()
+def get_last_po_rate(item):
+	item_po = frappe.db.get_all('Purchase Order', filters={'docstatus': 1})
+	for po in item_po:
+		purchase_order = frappe.get_doc('Purchase Order', po.name)
+		for po_item in purchase_order.items:
+			if po_item.item_code == item:
+				return po_item.rate
+	return 0
+
+@frappe.whitelist()
+def get_avg_cost(item):
+	stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
+	return stock_ledger_entry.valuation_rate
