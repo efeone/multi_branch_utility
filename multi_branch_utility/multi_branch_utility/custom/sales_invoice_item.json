@@ -93,7 +93,7 @@
    "in_preview": 0,
    "in_standard_filter": 0,
    "insert_after": "previous_selling_rate",
-   "label": "Previous Cost",
+   "label": "Previous Purchase Cost",
    "length": 0,
    "mandatory_depends_on": null,
    "modified": "2022-08-27 13:30:10.262361",
