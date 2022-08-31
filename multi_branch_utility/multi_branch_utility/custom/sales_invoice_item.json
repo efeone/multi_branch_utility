@@ -212,7 +212,7 @@
    "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
-   "insert_after": "grant_commission",
+   "insert_after": "base_price_list_rate",
    "label": null,
    "length": 0,
    "mandatory_depends_on": null,
