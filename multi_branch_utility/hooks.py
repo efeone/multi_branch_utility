@@ -112,7 +112,7 @@ doc_events = {
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.apply_additional_discount",
 	}
 }
-fixtures = ["Print Format"]
+fixtures = ["Print Format","Letter Head"]
 # Scheduled Tasks
 # ---------------
 
