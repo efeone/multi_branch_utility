@@ -110,6 +110,9 @@ doctype_js = {
 doc_events = {
 	"Payment Entry": {
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.apply_additional_discount",
+	},
+	"Sales Invoice": {
+		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values"
 	}
 }
 fixtures = ["Print Format","Letter Head"]
