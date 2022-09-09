@@ -70,3 +70,13 @@ def get_last_pr_rate(item):
 def get_avg_cost(item):
 	stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
 	return stock_ledger_entry.valuation_rate
+
+@frappe.whitelist()
+def set_import_missing_values(doc, method):
+	if doc.items:
+		for item in doc.items:
+			if not item.income_account:
+				item.income_account = frappe.get_cached_value("Company", doc.company, "default_income_account")
+				item.description = item.item_name
+	if not doc.cost_center:
+		doc.cost_center = frappe.get_cached_value("Customer", doc.customer, "cost_center")
