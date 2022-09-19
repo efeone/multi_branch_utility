@@ -9,7 +9,14 @@ frappe.ui.form.on('Sales Invoice', {
               make_payment(frm);
             }).addClass("btn-primary");
         }
-    }
+        frm.set_query("customer", function() {
+			return {
+				filters: {
+					payment_type: frm.doc.payment_type
+				}
+			};
+		});
+    },
 });
 
 
