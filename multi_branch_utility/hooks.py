@@ -112,8 +112,10 @@ doc_events = {
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.apply_additional_discount",
 	},
 	"Sales Invoice": {
-		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values"
+		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values",
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
 	}
+	
 }
 fixtures = ["Print Format","Letter Head"]
 # Scheduled Tasks

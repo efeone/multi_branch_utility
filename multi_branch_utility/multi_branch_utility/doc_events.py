@@ -82,29 +82,27 @@ def set_import_missing_values(doc, method):
 		doc.cost_center = frappe.get_cached_value("Customer", doc.customer, "cost_center")
 
 @frappe.whitelist()
-def make_payment(sales_invoice, mode_of_payment, paid_amount, account_paid_to, reference_no=None, reference_date=None):
-	sales_invoice_doc = frappe.get_doc("Sales Invoice", sales_invoice)
-	if float(paid_amount) > 0:
-		debt = frappe.get_last_doc('Company')
-		pay = frappe.new_doc('Payment Entry')
-		pay.payment_type = "Receive"
-		pay.mode_of_payment = mode_of_payment
-		pay.party_type = "Customer"
-		pay.party = sales_invoice_doc.customer
-		pay.paid_from = debt.default_receivable_account
-		pay.source_exchange_rate = 1
-		pay.paid_amount = float(paid_amount)
-		pay.received_amount = float(paid_amount)
-		pay.paid_to = account_paid_to
-		pay.paid_to_account_currency = debt.default_currency
-		pay.reference_no = reference_no
-		pay.reference_date = reference_date
-		pay.append("references",{
-			"reference_doctype" : "Sales Invoice",
-			"reference_name": sales_invoice,
-			"total_amount": float(sales_invoice_doc.grand_total),
-			"outstanding_amount": float(sales_invoice_doc.outstanding_amount),
-			"allocated_amount": float(paid_amount)
-		})
-		pay.submit()
-		frappe.msgprint(msg='Payment Enrty against '+ sales_invoice + ' is completed', title='Message', alert="True")
+def make_payment(doc, method):
+	mode_of_payment = frappe.get_doc("Mode of Payment", doc.payment_type)
+	account_paid_to = mode_of_payment.accounts[0].default_account
+	debt = frappe.get_last_doc('Company')
+	pay = frappe.new_doc('Payment Entry')
+	pay.payment_type = "Receive"
+	pay.mode_of_payment = doc.payment_type
+	pay.party_type = "Customer"
+	pay.party = doc.customer
+	pay.paid_from = debt.default_receivable_account
+	pay.source_exchange_rate = 1
+	pay.paid_amount = doc.outstanding_amount
+	pay.received_amount = doc.outstanding_amount
+	pay.paid_to = account_paid_to
+	pay.paid_to_account_currency = debt.default_currency
+	pay.append("references",{
+		"reference_doctype" : "Sales Invoice",
+		"reference_name": doc.name,
+		"total_amount": doc.grand_total,
+		"outstanding_amount": doc.outstanding_amount,
+		"allocated_amount": doc.outstanding_amount
+	})
+	pay.submit()
+	frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
