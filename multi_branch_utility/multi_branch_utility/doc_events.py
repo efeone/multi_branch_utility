@@ -83,26 +83,43 @@ def set_import_missing_values(doc, method):
 
 @frappe.whitelist()
 def make_payment(doc, method):
-	mode_of_payment = frappe.get_doc("Mode of Payment", doc.payment_type)
-	account_paid_to = mode_of_payment.accounts[0].default_account
-	debt = frappe.get_last_doc('Company')
-	pay = frappe.new_doc('Payment Entry')
-	pay.payment_type = "Receive"
-	pay.mode_of_payment = doc.payment_type
-	pay.party_type = "Customer"
-	pay.party = doc.customer
-	pay.paid_from = debt.default_receivable_account
-	pay.source_exchange_rate = 1
-	pay.paid_amount = doc.outstanding_amount
-	pay.received_amount = doc.outstanding_amount
-	pay.paid_to = account_paid_to
-	pay.paid_to_account_currency = debt.default_currency
-	pay.append("references",{
-		"reference_doctype" : "Sales Invoice",
-		"reference_name": doc.name,
-		"total_amount": doc.grand_total,
-		"outstanding_amount": doc.outstanding_amount,
-		"allocated_amount": doc.outstanding_amount
-	})
-	pay.submit()
-	frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
+	if doc.payment_type and doc.payment_type=="Cash":
+		mode_of_payment = frappe.get_doc("Mode of Payment", doc.payment_type)
+		mode_of_payment_account = mode_of_payment.accounts[0].default_account
+		company = frappe.get_last_doc('Company')
+
+		if doc.doctype == "Sales Invoice":
+			reference_doctype = doc.doctype
+			party_type = "Customer"
+			party = doc.customer
+			payment_type = "Receive"
+			paid_to = mode_of_payment_account
+			paid_from = company.default_receivable_account
+		if doc.doctype == "Purchase Invoice":
+			reference_doctype = doc.doctype
+			party_type = "Supplier"
+			party = doc.supplier
+			payment_type = "Pay"
+			paid_from = mode_of_payment_account
+			paid_to = company.default_payable_account
+
+		pay = frappe.new_doc('Payment Entry')
+		pay.payment_type = payment_type
+		pay.mode_of_payment = "Cash"
+		pay.party_type = party_type
+		pay.party = party
+		pay.paid_from = paid_from
+		pay.source_exchange_rate = 1
+		pay.paid_amount = doc.outstanding_amount
+		pay.received_amount = doc.outstanding_amount
+		pay.paid_to = paid_to
+		pay.append("references",{
+			"reference_doctype" : reference_doctype,
+			"reference_name": doc.name,
+			"total_amount": doc.grand_total,
+			"outstanding_amount": doc.outstanding_amount,
+			"allocated_amount": doc.outstanding_amount
+		})
+		pay.submit()
+		frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
+		doc.reload()
