@@ -84,8 +84,8 @@ def set_import_missing_values(doc, method):
 @frappe.whitelist()
 def make_payment(doc, method):
 	if frappe.db.get_single_value('Multi Branch Settings','allow_payment_entry'):
-		if not doc.is_return and doc.payment_type and doc.payment_type=="Cash":
-			mode_of_payment = frappe.get_doc("Mode of Payment", doc.payment_type)
+		if not doc.is_return and doc.payment_type and doc.payment_type=='CASH':
+			mode_of_payment = frappe.get_doc("Mode of Payment", 'Cash')
 			mode_of_payment_account = mode_of_payment.accounts[0].default_account
 			company = frappe.get_last_doc('Company')
 			if doc.doctype == "Sales Invoice":

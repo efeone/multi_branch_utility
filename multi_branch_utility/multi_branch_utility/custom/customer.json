@@ -101,7 +101,7 @@
     "name": "Customer-payment_type",
     "no_copy": 0,
     "non_negative": 0,
-    "options": "\nCash\nBank\nCredit",
+    "options": "\nCASH\nBANK\nCREDIT",
     "owner": "Administrator",
     "parent": null,
     "parentfield": null,

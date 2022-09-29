@@ -92,7 +92,12 @@ let make_payment = function(frm){
         }
     }
     });
-    d.set_value('mode_of_payment', frm.doc.payment_type)
+    if (frm.doc.payment_type == 'CASH'){
+        d.set_value('mode_of_payment', 'Cash')
+    }
+    else{
+        d.set_value('mode_of_payment', frm.doc.payment_type)
+    }
     d.show();
 }
 
