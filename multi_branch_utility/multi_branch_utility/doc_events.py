@@ -82,6 +82,26 @@ def set_import_missing_values(doc, method):
 		doc.cost_center = frappe.get_cached_value("Customer", doc.customer, "cost_center")
 
 @frappe.whitelist()
+def set_my_user_default(bootinfo):
+	user_default_settings_exists = frappe.db.exists('User Default Settings', {'user': frappe.session.user})
+	if user_default_settings_exists:
+		default_values = {}
+		user_default_settings = frappe.get_doc('User Default Settings', {'user': frappe.session.user})
+		default_values['company'] = user_default_settings.company
+		default_values['cost_center'] = user_default_settings.cost_center
+		default_values['warehouse'] = user_default_settings.warehouse
+		default_values['price_list'] = user_default_settings.price_list
+		from frappe.defaults import get_defaults
+		defaults = get_defaults(frappe.session.user)
+		for entry in default_values:
+			try:
+				if not defaults[entry]:
+					frappe.defaults.set_user_default(entry, default_values.get(entry))
+			except Exception:
+				return
+		return "success"
+
+@frappe.whitelist()
 def make_payment(doc, method):
 	if frappe.db.get_single_value('Multi Branch Settings','allow_payment_entry'):
 		if not doc.is_return and doc.payment_type and doc.payment_type=='CASH':
