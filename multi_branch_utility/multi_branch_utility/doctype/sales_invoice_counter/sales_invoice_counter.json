@@ -9,8 +9,17 @@
   "customer",
   "customer_name",
   "column_break_3",
+  "company",
   "posting_date",
   "payment_type",
+  "section_break_7",
+  "currency",
+  "conversion_rate",
+  "e",
+  "selling_price_list",
+  "price_list_currency",
+  "plc_conversion_rate",
+  "ignore_pricing_rule",
   "items_section",
   "items",
   "section_break_8",
@@ -37,20 +46,25 @@
    "options": "Customer"
   },
   {
+   "fetch_from": "customer.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
-   "label": "Customer Name"
+   "label": "Customer Name",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
   {
+   "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
-   "label": " Posting Date"
+   "label": " Posting Date",
+   "read_only": 1
   },
   {
+   "default": "CASH",
    "fieldname": "payment_type",
    "fieldtype": "Select",
    "label": "Payment Type",
@@ -65,7 +79,7 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": " Items",
-   "options": "Sales Invoice Item"
+   "options": "Sales Invoice Counter Item"
   },
   {
    "fieldname": "section_break_8",
@@ -160,12 +174,63 @@
    "fieldtype": "Float",
    "label": "Total Quantity",
    "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "conversion_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate"
+  },
+  {
+   "fieldname": "e",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "selling_price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "price_list_currency",
+   "fieldtype": "Link",
+   "label": "Price List Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "plc_conversion_rate",
+   "fieldtype": "Float",
+   "label": "Price List Exchange Rate"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_pricing_rule",
+   "fieldtype": "Check",
+   "label": "Ignore Pricing Rule"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-09-30 11:50:27.009369",
+ "modified": "2022-10-01 10:59:49.595446",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Counter",
