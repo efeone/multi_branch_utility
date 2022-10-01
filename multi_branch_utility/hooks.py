@@ -120,6 +120,9 @@ doc_events = {
 	}
 }
 fixtures = ["Print Format","Letter Head"]
+
+extend_bootinfo = "multi_branch_utility.multi_branch_utility.doc_events.set_my_user_default"
+
 # Scheduled Tasks
 # ---------------
 
