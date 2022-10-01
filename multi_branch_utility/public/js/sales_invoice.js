@@ -2,10 +2,6 @@ frappe.ui.form.on('Sales Invoice', {
     onload_post_render(frm) {
         frm.remove_custom_button('Fetch Timesheet')
     },
-    on_submit(frm)
-    {
-    window.open("/printview?doctype=Sales%20Invoice&name="+ frm.doc.name +"&trigger_print=1&format=KAS%20VAT%20Invoice%20New&no_letterhead=0&letterhead=Gateway%20Wholesale&settings=%7B%7D&_lang=en-US")
-    },
     refresh(frm){
         frm.remove_custom_button('Fetch Timesheet')
         if(frm.doc.docstatus == 1 && frm.doc.outstanding_amount!= 0 && frm.doc.payment_type != 'Credit'){
