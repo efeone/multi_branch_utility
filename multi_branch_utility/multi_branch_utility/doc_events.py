@@ -68,8 +68,11 @@ def get_last_pr_rate(item):
 
 @frappe.whitelist()
 def get_avg_cost(item):
-	stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
-	return stock_ledger_entry.valuation_rate
+	if(frappe.db.exists('Stock Ledger Entry',{'item_code':item})):
+		stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
+		return stock_ledger_entry.valuation_rate
+	else:
+		return 0
 
 @frappe.whitelist()
 def set_import_missing_values(doc, method):

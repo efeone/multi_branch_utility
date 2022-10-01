@@ -8,6 +8,7 @@
  "field_order": [
   "customer",
   "customer_name",
+  "selling_price_list",
   "column_break_3",
   "company",
   "posting_date",
@@ -16,7 +17,6 @@
   "currency",
   "conversion_rate",
   "e",
-  "selling_price_list",
   "price_list_currency",
   "plc_conversion_rate",
   "ignore_pricing_rule",
@@ -76,8 +76,10 @@
    "label": " Items"
   },
   {
+   "bold": 1,
    "fieldname": "items",
    "fieldtype": "Table",
+   "in_standard_filter": 1,
    "label": " Items",
    "options": "Sales Invoice Counter Item"
   },
@@ -230,7 +232,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-01 10:59:49.595446",
+ "modified": "2022-10-01 14:11:26.969228",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Counter",

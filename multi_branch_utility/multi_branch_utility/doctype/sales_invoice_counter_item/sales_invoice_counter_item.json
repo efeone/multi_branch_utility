@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_copy": 1,
  "autoname": "hash",
  "creation": "2022-10-01 08:11:49.525708",
  "doctype": "DocType",
@@ -89,6 +90,12 @@
   "item_tax_rate",
   "actual_batch_qty",
   "actual_qty",
+  "section_break_83",
+  "previous_selling_rate",
+  "previous_buying_rate",
+  "column_break_86",
+  "average_cost",
+  "print_item_order",
   "edit_references",
   "sales_order",
   "so_detail",
@@ -207,8 +214,9 @@
   {
    "bold": 1,
    "columns": 2,
+   "default": "0",
    "fieldname": "qty",
-   "fieldtype": "Float",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Quantity",
    "oldfieldname": "qty",
@@ -483,6 +491,7 @@
    "collapsible": 1,
    "fieldname": "accounting",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Accounting Details"
   },
   {
@@ -543,6 +552,7 @@
    "collapsible_depends_on": "enable_deferred_revenue",
    "fieldname": "deferred_revenue",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Deferred Revenue"
   },
   {
@@ -621,7 +631,8 @@
    "collapsible_depends_on": "eval:doc.serial_no || doc.batch_no",
    "fieldname": "warehouse_and_reference",
    "fieldtype": "Section Break",
-   "label": "Stock Details"
+   "label": "Stock Details",
+   "read_only": 1
   },
   {
    "fieldname": "warehouse",
@@ -712,6 +723,7 @@
    "allow_on_submit": 1,
    "fieldname": "actual_qty",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Available Qty at Warehouse",
    "oldfieldname": "actual_qty",
    "oldfieldtype": "Currency",
@@ -789,6 +801,7 @@
    "collapsible": 1,
    "fieldname": "accounting_dimensions_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Accounting Dimensions"
   },
   {
@@ -816,7 +829,8 @@
   },
   {
    "fieldname": "section_break_54",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -842,11 +856,48 @@
    "fieldname": "conversion_rate",
    "fieldtype": "Data",
    "label": "conversion"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_83",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "previous_selling_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Previous Selling Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "previous_buying_rate",
+   "fieldtype": "Currency",
+   "label": "Previous Purchase Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_86",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "average_cost",
+   "fieldtype": "Currency",
+   "label": "Average Cost",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item_code.print_item_order",
+   "fieldname": "print_item_order",
+   "fieldtype": "Int",
+   "label": "Print Item Order",
+   "read_only": 1
   }
  ],
+ "hide_toolbar": 1,
+ "is_virtual": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-10-01 08:40:28.027503",
+ "modified": "2022-10-01 14:08:40.708040",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Counter Item",
