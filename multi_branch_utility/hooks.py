@@ -32,6 +32,12 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Payment Entry" : "public/js/payment_entry.js",
+	"Sales Invoice" : "public/js/sales_invoice.js",
+	"Stock Entry" : "public/js/stock_entry.js",
+	"Purchase Invoice" : "public/js/purchase_invoice.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -102,7 +108,19 @@ app_license = "MIT"
 # 		"on_trash": "method"
 #	}
 # }
-
+doc_events = {
+	"Payment Entry": {
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.apply_additional_discount",
+	},
+	"Sales Invoice": {
+		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values",
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
+	},
+	"Purchase Invoice": {
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
+	}
+}
+fixtures = ["Print Format","Letter Head"]
 # Scheduled Tasks
 # ---------------
 
