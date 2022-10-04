@@ -120,7 +120,7 @@ doc_events = {
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
 	}
 }
-fixtures = ["Print Format","Letter Head"]
+fixtures = ["Print Format", "Letter Head", "Payment Type"]
 # Scheduled Tasks
 # ---------------
 

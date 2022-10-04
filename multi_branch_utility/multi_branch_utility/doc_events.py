@@ -83,28 +83,26 @@ def set_import_missing_values(doc, method):
 
 @frappe.whitelist()
 def make_payment(doc, method):
-	if frappe.db.get_single_value('Multi Branch Settings','allow_payment_entry'):
-		if not doc.is_return and doc.payment_type and doc.payment_type=='CASH':
-			mode_of_payment = frappe.get_doc("Mode of Payment", 'Cash')
-			mode_of_payment_account = mode_of_payment.accounts[0].default_account
+	if frappe.db.get_single_value('Multi Branch Settings', 'allow_payment_entry'):
+		if not doc.is_return and doc.payment_type and doc.mode_of_payment and doc.mode_of_payment_account:
 			company = frappe.get_last_doc('Company')
 			if doc.doctype == "Sales Invoice":
 				reference_doctype = doc.doctype
 				party_type = "Customer"
 				party = doc.customer
-				paid_to = mode_of_payment_account
+				paid_to = doc.mode_of_payment_account
 				paid_from = company.default_receivable_account
-				payment_type = "Receive"			
+				payment_type = "Receive"
 			if doc.doctype == "Purchase Invoice":
 				reference_doctype = doc.doctype
 				party_type = "Supplier"
-				party = doc.supplier	
-				paid_from = mode_of_payment_account
-				paid_to = company.default_payable_account	
-				payment_type = "Pay"	
+				party = doc.supplier
+				paid_from = doc.mode_of_payment_account
+				paid_to = company.default_payable_account
+				payment_type = "Pay"
 			pay = frappe.new_doc('Payment Entry')
 			pay.payment_type = payment_type
-			pay.mode_of_payment = "Cash"
+			pay.mode_of_payment = doc.mode_of_payment
 			pay.party_type = party_type
 			pay.party = party
 			pay.paid_from = paid_from
