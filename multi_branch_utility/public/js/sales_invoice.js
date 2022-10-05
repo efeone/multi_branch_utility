@@ -4,25 +4,56 @@ frappe.ui.form.on('Sales Invoice', {
     },
     on_submit(frm)
     {
-    window.open("/printview?doctype=Sales%20Invoice&name="+ frm.doc.name +"&trigger_print=1&format=KAS%20VAT%20Invoice%20New&no_letterhead=0&letterhead=Gateway%20Wholesale&settings=%7B%7D&_lang=en-US")
+      window.open("/printview?doctype=Sales%20Invoice&name="+ frm.doc.name +"&trigger_print=1&format=KAS%20VAT%20Invoice%20New&no_letterhead=0&letterhead=Gateway%20Wholesale&settings=%7B%7D&_lang=en-US")
     },
     refresh(frm){
         frm.remove_custom_button('Fetch Timesheet')
-        if(frm.doc.docstatus == 1 && frm.doc.outstanding_amount!= 0 && frm.doc.payment_type != 'Credit'){
+        if(frm.doc.docstatus == 1 && frm.doc.outstanding_amount!= 0 && frm.doc.payment_type != 'CREDIT'){
             frm.add_custom_button('Make Payment',function(){
               make_payment(frm);
             }).addClass("btn-primary");
         }
         frm.set_query("customer", function() {
-			return {
-				filters: {
-					payment_type: frm.doc.payment_type
-				}
-			};
-		});
+    			return {
+    				filters: {
+    					payment_type: frm.doc.payment_type
+    				}
+    			};
+    		});
     },
+    payment_type(frm){
+      if(frm.doc.payment_type && frm.doc.cost_center){
+        frappe.call({
+            method: 'multi_branch_utility.multi_branch_utility.utils.get_mode_of_payment',
+            args: {
+              'payment_type': frm.doc.payment_type,
+              'cost_center' : frm.doc.cost_center
+            },
+            callback: function (r) {
+              if( r && r.message ){
+                frm.set_value('mode_of_payment', r.message.mode_of_payment);
+                frm.refresh_field('mode_of_payment');
+                frm.set_value('mode_of_payment_account', r.message.account);
+                frm.refresh_field('mode_of_payment_account');
+              }
+              else{
+                unset_mode_of_payment(frm)
+              }
+            }
+        });
+      }
+      else{
+        unset_mode_of_payment(frm)
+      }
+    }
 });
 
+let unset_mode_of_payment = function(frm){
+  frm.set_value('mode_of_payment', );
+  frm.refresh_field('mode_of_payment');
+  frm.set_value('mode_of_payment_account', );
+  frm.refresh_field('mode_of_payment_account');
+}
 
 let make_payment = function(frm){
     let d = new frappe.ui.Dialog({
@@ -92,11 +123,8 @@ let make_payment = function(frm){
         }
     }
     });
-    if (frm.doc.payment_type == 'CASH'){
-        d.set_value('mode_of_payment', 'Cash')
-    }
-    else{
-        d.set_value('mode_of_payment', frm.doc.payment_type)
+    if(frm.doc.mode_of_payment){
+      d.set_value('mode_of_payment', frm.doc.mode_of_payment)
     }
     d.show();
 }
