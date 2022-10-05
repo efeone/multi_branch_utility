@@ -134,7 +134,7 @@ frappe.ui.form.on('Sales Invoice Item', {
         var row = locals[cdt][cdn]
         if (frm.doc.customer && row.item_code) {
             frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.doc_events.get_last_si_rate',
+                method: 'multi_branch_utility.multi_branch_utility.utils.get_last_si_rate',
                 args: {
                     'customer': frm.doc.customer,
                     'item': row.item_code
@@ -146,7 +146,7 @@ frappe.ui.form.on('Sales Invoice Item', {
                 }
             })
             frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.doc_events.get_last_pr_rate',
+                method: 'multi_branch_utility.multi_branch_utility.utils.get_last_pr_rate',
                 args: {
                     'item': row.item_code
                 },
@@ -157,7 +157,7 @@ frappe.ui.form.on('Sales Invoice Item', {
                 }
             })
             frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.doc_events.get_avg_cost',
+                method: 'multi_branch_utility.multi_branch_utility.utils.get_avg_cost',
                 args: {
                     'item': row.item_code
                 },
