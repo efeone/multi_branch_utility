@@ -8,11 +8,6 @@ frappe.ui.form.on('Sales Invoice', {
     },
     refresh(frm){
         frm.remove_custom_button('Fetch Timesheet')
-        if(frm.doc.docstatus == 1 && frm.doc.outstanding_amount!= 0 && frm.doc.payment_type != 'CREDIT'){
-            frm.add_custom_button('Make Payment',function(){
-              make_payment(frm);
-            }).addClass("btn-primary");
-        }
         frm.set_query("customer", function() {
     			return {
     				filters: {
@@ -21,114 +16,7 @@ frappe.ui.form.on('Sales Invoice', {
     			};
     		});
     },
-    payment_type(frm){
-      if(frm.doc.payment_type && frm.doc.cost_center){
-        frappe.call({
-            method: 'multi_branch_utility.multi_branch_utility.utils.get_mode_of_payment',
-            args: {
-              'payment_type': frm.doc.payment_type,
-              'cost_center' : frm.doc.cost_center
-            },
-            callback: function (r) {
-              if( r && r.message ){
-                frm.set_value('mode_of_payment', r.message.mode_of_payment);
-                frm.refresh_field('mode_of_payment');
-                frm.set_value('mode_of_payment_account', r.message.account);
-                frm.refresh_field('mode_of_payment_account');
-              }
-              else{
-                unset_mode_of_payment(frm)
-              }
-            }
-        });
-      }
-      else{
-        unset_mode_of_payment(frm)
-      }
-    }
 });
-
-let unset_mode_of_payment = function(frm){
-  frm.set_value('mode_of_payment', );
-  frm.refresh_field('mode_of_payment');
-  frm.set_value('mode_of_payment_account', );
-  frm.refresh_field('mode_of_payment_account');
-}
-
-let make_payment = function(frm){
-    let d = new frappe.ui.Dialog({
-    title: 'Make Payment',
-    fields: [
-        {
-            label: 'Mode of Payment',
-            fieldname: 'mode_of_payment',
-            fieldtype: 'Link',
-            options: 'Mode of Payment',
-            reqd: 1,
-            read_only:1
-        },
-        {
-            label:"Grand Total",
-            fieldname: 'grand_total',
-            fieldtype: 'Currency',
-            default: frm.doc.outstanding_amount,
-            read_only: 1
-        },
-        {
-            label:"Recieved Amount",
-            fieldname: 'recieved_amount',
-            fieldtype: 'Currency',
-            reqd: 1,
-            default: frm.doc.outstanding_amount
-        },
-        {
-            label:"Cheque/Reference No",
-            fieldname: 'reference_no',
-            fieldtype: 'Data'
-        },
-        {
-            label:"Cheque/Reference Date",
-            fieldname: 'reference_date',
-            fieldtype: 'Date'
-        }
-    ],
-    primary_action_label: 'Submit',
-    primary_action(values) {
-        d.hide();
-        if(values.mode_of_payment && values.recieved_amount){
-          if(values.recieved_amount > values.grand_total){
-            frappe.throw(__("Recieved Amount can't be greater than Grand Total"));
-          }
-          get_payment_mode_account(frm, values.mode_of_payment, function(account){
-            frappe.call({
-              method: 'multi_branch_utility.multi_branch_utility.doc_events.make_payment',
-              args: {
-                'sales_invoice': frm.doc.name,
-                'mode_of_payment': values.mode_of_payment,
-                'paid_amount': values.recieved_amount,
-                'account_paid_to': account,
-                'reference_no': values.reference_no,
-                'reference_date': values.reference_date,
-              },
-              callback: function(r) {
-                if(r) {
-                    frm.reload_doc()
-                }
-              }
-            })
-          });
-        }
-        else{
-          frappe.throw(__('Mode of Payment and Amount is mandaory'));
-        }
-    }
-    });
-    if(frm.doc.mode_of_payment){
-      d.set_value('mode_of_payment', frm.doc.mode_of_payment)
-    }
-    d.show();
-}
-
 frappe.ui.form.on('Sales Invoice Item', {
     item_code: function (frm, cdt, cdn) {
         var row = locals[cdt][cdn]
