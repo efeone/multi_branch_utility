@@ -8,7 +8,8 @@
  "field_order": [
   "mode_of_payment",
   "cost_center",
-  "account"
+  "account",
+  "is_default"
  ],
  "fields": [
   {
@@ -38,12 +39,19 @@
    "label": "Account",
    "options": "Account",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Default"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-10-04 08:56:04.566301",
+ "modified": "2022-10-06 08:43:16.540469",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Payment Type Accounts",
