@@ -92,6 +92,7 @@
    "fieldtype": "Link",
    "label": "Cost Center",
    "options": "Cost Center",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -120,6 +121,7 @@
    "fieldtype": "Link",
    "label": "Source Warehouse",
    "options": "Warehouse",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -174,7 +176,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-06 15:45:22.181672",
+ "modified": "2022-10-07 08:48:40.666336",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
