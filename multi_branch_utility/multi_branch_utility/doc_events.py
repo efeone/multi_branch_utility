@@ -61,6 +61,8 @@ def make_payment(doc, method):
 	if frappe.db.get_single_value('Multi Branch Settings', 'allow_payment_entry'):
 		from multi_branch_utility.multi_branch_utility.utils import get_mode_of_payment
 		payment_type_details = get_mode_of_payment(doc.payment_type, doc.cost_center)
+		if not payment_type_details:
+			frappe.throw('Please set Mode of Payment in Payment Type CASH')
 		if payment_type_details:
 			if not doc.is_return and doc.payment_type and doc.payment_type == 'CASH' and payment_type_details.mode_of_payment and payment_type_details.account:
 				company = frappe.get_last_doc('Company')
