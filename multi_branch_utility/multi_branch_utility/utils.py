@@ -51,3 +51,20 @@ def get_price_list_rate(price_list, item):
         item_price = frappe.get_last_doc('Item Price',{'price_list': price_list, 'item_code': item})
         price_list_rate = item_price.price_list_rate
     return price_list_rate
+
+@frappe.whitelist()
+def get_available_qty(warehouse, item):
+    query = """
+		select
+            SUM(b.actual_qty) as product_stock
+		from
+            `tabBin` as b
+		where
+			b.item_code = %(item_code)s AND
+			b.warehouse = %(warehouse)s
+	"""
+    return_data = frappe.db.sql(query.format(), { 'item_code': item, 'warehouse': warehouse }, as_dict=True)
+    if return_data and return_data[0].product_stock:
+        return return_data[0].product_stock
+    else:
+        return 0

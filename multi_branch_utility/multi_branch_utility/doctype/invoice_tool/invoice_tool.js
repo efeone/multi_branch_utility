@@ -43,10 +43,20 @@ frappe.ui.form.on('Invoice Tool Item', {
       row.warehouse = frm.doc.set_warehouse;
       frm.refresh_field('items');
     }
-    calculate_totals(frm)
+    calculate_totals(frm);
   },
   item_code: function (frm, cdt, cdn) {
-      var row = locals[cdt][cdn]
+      var row = locals[cdt][cdn];
+      if (!frm.doc.customer) {
+        frm.clear_table('items');
+        frm.refresh_field('items');
+        frappe.throw(__('Customer is Required!'));
+      }
+      if (!frm.doc.set_warehouse) {
+        frm.clear_table('items');
+        frm.refresh_field('items');
+        frappe.throw(__('Source Warehouse is Required!'));
+      }
       if (frm.doc.selling_price_list && row.item_code) {
         frappe.call({
             method: 'multi_branch_utility.multi_branch_utility.utils.get_price_list_rate',
@@ -55,8 +65,19 @@ frappe.ui.form.on('Invoice Tool Item', {
                 'item': row.item_code
             },
             callback: function (r) {
-                row.rate = r.message
-                frm.refresh_field('items');
+                row.rate = r.message;
+            }
+        });
+      }
+      if (frm.doc.set_warehouse && row.item_code) {
+        frappe.call({
+            method: 'multi_branch_utility.multi_branch_utility.utils.get_available_qty',
+            args: {
+                'warehouse': frm.doc.set_warehouse,
+                'item': row.item_code
+            },
+            callback: function (r) {
+                row.actual_qty = r.message;
             }
         });
       }
@@ -68,34 +89,29 @@ frappe.ui.form.on('Invoice Tool Item', {
                   'item': row.item_code
               },
               callback: function (r) {
-                  let prev_si_rate = r.message
-                  row.previous_selling_rate = prev_si_rate
-                  frm.refresh_field('items');
+                  row.previous_selling_rate = r.message;
               }
-          })
+          });
           frappe.call({
               method: 'multi_branch_utility.multi_branch_utility.utils.get_last_pr_rate',
               args: {
                   'item': row.item_code
               },
               callback: function (r) {
-                  let prev_pr_rate = r.message
-                  row.previous_buying_rate = prev_pr_rate
-                  frm.refresh_field('items');
+                  row.previous_buying_rate = r.message;
               }
-          })
+          });
           frappe.call({
               method: 'multi_branch_utility.multi_branch_utility.utils.get_avg_cost',
               args: {
                   'item': row.item_code
               },
               callback: function (r) {
-                  let avg_cost = r.message
-                  row.average_cost = avg_cost
-                  frm.refresh_field('items');
+                  row.average_cost = r.message;
               }
-          })
+          });
       }
+      frm.refresh_field('items');
   },
   qty: function(frm, cdt, cdn) {
     var row = locals[cdt][cdn];
@@ -139,11 +155,16 @@ function create_sales_invoice(frm){
   frappe.db.insert({
 			doctype: 'Sales Invoice',
 			customer: frm.doc.customer,
-			payment_type:frm.doc.payment_type,
+			payment_type: frm.doc.payment_type,
+      update_stock: frm.doc.update_stock,
+      outstanding_amount: frm.doc.outstanding_amount,
+      total: frm.doc.total,
+      grand_total: frm.doc.grand_total,
 			items: frm.doc.items,
-			docstatus: 0
+			docstatus: 1
 		}).then(function(doc) {
 			frappe.show_alert('Sales Invoice Created..', 5);
+      frm.reload_doc();
 		});
 }
 
@@ -151,10 +172,9 @@ function check_mandatory_fields(frm){
   if (!frm.doc.customer) { frappe.throw(__('Customer is Required!')); }
   if (!frm.doc.posting_date) { frappe.throw(__('Posting Date is Required!')); }
   if (!frm.doc.cost_center) { frappe.throw(__('Cost Center is Required!')); }
-  if (!frm.doc.currency) { frappe.throw(__('Currency is Required!')); }
   if (!frm.doc.selling_price_list) { frappe.throw(__('Selling Price List is Required!')); }
   if (!frm.doc.set_warehouse) { frappe.throw(__('Source Warehouse is Required!')); }
-  if (!frm.doc.items.length) { frappe.throw(__('Items is Required!')); }
+  if (!frm.doc.items.length) { frappe.throw(__('Item is Required!')); }
   return 1
 }
 
