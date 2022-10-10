@@ -160,6 +160,8 @@ function create_sales_invoice(frm){
       outstanding_amount: frm.doc.outstanding_amount,
       total: frm.doc.total,
       grand_total: frm.doc.grand_total,
+      rounded_total: frm.doc.rounded_total,
+      rounding_adjustment: frm.doc.rounding_adjustment,
 			items: frm.doc.items,
 			docstatus: 1
 		}).then(function(doc) {
@@ -192,5 +194,7 @@ function calculate_totals(frm){
   frm.set_value('total_qty', total_qty);
   frm.set_value('total', total_amount);
   frm.set_value('grand_total', total_amount);
-  frm.set_value('outstanding_amount', total_amount);
+  frm.set_value('rounded_total', Math.round(total_amount));
+  frm.set_value('rounding_adjustment', frm.doc.rounded_total - frm.doc.grand_total );
+  frm.set_value('outstanding_amount', frm.doc.rounded_total);
 }
