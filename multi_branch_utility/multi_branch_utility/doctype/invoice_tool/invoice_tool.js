@@ -166,6 +166,7 @@ function create_sales_invoice(frm){
 			docstatus: 1
 		}).then(function(doc) {
 			frappe.show_alert('Sales Invoice Created..', 5);
+      print_invoice(doc)
       frm.reload_doc();
 		});
 }
@@ -197,4 +198,31 @@ function calculate_totals(frm){
   frm.set_value('rounded_total', Math.round(total_amount));
   frm.set_value('rounding_adjustment', frm.doc.rounded_total - frm.doc.grand_total );
   frm.set_value('outstanding_amount', frm.doc.rounded_total);
+}
+
+function print_invoice(doc){
+  frappe.call({
+      method: 'multi_branch_utility.multi_branch_utility.utils.get_print_format_and_lh',
+      args: {
+          'doctype': doc.doctype,
+          'cost_center': doc.cost_center
+      },
+      callback: function (r) {
+          if(r && r.message){
+            let defaults = r.message;
+            let print_format = "Standard";
+            let letter_head = ""
+            if(defaults['print_format']){
+              print_format = defaults['print_format']
+            }
+            if(defaults['letter_head']){
+              letter_head = defaults['letter_head']
+              window.open("/printview?doctype=Sales%20Invoice&name="+ doc.name +"&trigger_print=1&format="+ print_format +"&no_letterhead=0&letterhead="+ letter_head +"&settings=%7B%7D&_lang=en-US")
+            }
+            else{
+              window.open("/printview?doctype=Sales%20Invoice&name="+ doc.name +"&trigger_print=1&format="+ print_format +"&no_letterhead=1&settings=%7B%7D&_lang=en-US")
+            }
+          }
+      }
+  })
 }

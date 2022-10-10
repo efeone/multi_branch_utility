@@ -7,7 +7,9 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_1",
-  "allow_payment_entry"
+  "allow_payment_entry",
+  "print_settings_section",
+  "cost_center_defaults"
  ],
  "fields": [
   {
@@ -20,12 +22,23 @@
    "fieldname": "section_break_1",
    "fieldtype": "Section Break",
    "label": "Settings"
+  },
+  {
+   "fieldname": "print_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Print Settings"
+  },
+  {
+   "fieldname": "cost_center_defaults",
+   "fieldtype": "Table",
+   "label": "Cost Center Defaults",
+   "options": "Cost Center Defaults"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-09-28 09:08:14.204799",
+ "modified": "2022-10-10 16:05:43.260021",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Multi Branch Settings",

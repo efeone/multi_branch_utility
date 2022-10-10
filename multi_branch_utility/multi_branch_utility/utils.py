@@ -68,3 +68,15 @@ def get_available_qty(warehouse, item):
         return return_data[0].product_stock
     else:
         return 0
+
+@frappe.whitelist()
+def get_print_format_and_lh(doctype, cost_center):
+    defaults = { 'letter_head': "", 'print_format': "" }
+    multi_branch_settings = frappe.get_doc('Multi Branch Settings')
+    cost_center_defaults = multi_branch_settings.cost_center_defaults
+    if cost_center_defaults:
+        for cost_center_default in cost_center_defaults:
+            if cost_center_default.cost_center == cost_center and cost_center_default.document_type == doctype :
+                defaults['print_format'] = cost_center_default.print_format
+                defaults['letter_head'] = cost_center_default.letter_head
+    return defaults
