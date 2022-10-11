@@ -3,31 +3,26 @@ frappe.ui.form.on('Purchase Invoice', {
     {
      window.open("/printview?doctype=Purchase%20Invoice&name="+ frm.doc.name +"&trigger_print=1&format=Standard&no_letterhead=1&settings=%7B%7D&_lang=en-US")
     },
-    payment_type(frm){
-      if(frm.doc.payment_type && frm.doc.cost_center){
-        frappe.call({
-            method: 'multi_branch_utility.multi_branch_utility.utils.get_mode_of_payment',
-            args: {
-              'payment_type': frm.doc.payment_type,
-              'cost_center' : frm.doc.cost_center
-            },
-            callback: function (r) {
-              if( r && r.message ){
-                frm.set_value('mode_of_payment', r.message.mode_of_payment);
-                frm.refresh_field('mode_of_payment');
-                frm.set_value('mode_of_payment_account', r.message.account);
-                frm.refresh_field('mode_of_payment_account');
+    supplier: function(frm){
+      if(frm.doc.supplier){
+          frappe.call({
+              'method': 'frappe.client.get',
+              args: {
+                  doctype: 'Supplier',
+                  name: frm.doc.supplier
+              },
+              callback: function (data) {
+                  if(data.message){
+                      frm.set_value('payment_type', data.message.payment_type)
+                      frm.set_value('set_warehouse', data.message.default_warehouse)
+                      frm.set_value('buying_price_list', data.message.default_price_list)
+                      frm.refresh_fields()
+                  }
               }
-              else{
-                unset_mode_of_payment(frm)
-              }
-            }
-        });
+          })
       }
-      else{
-        unset_mode_of_payment(frm)
-      }
-    }
+  }, 
+    
 });
 
 let unset_mode_of_payment = function(frm){
