@@ -9,25 +9,29 @@
  "field_order": [
   "naming_series",
   "customer",
-  "customer_name",
   "payment_type",
-  "set_warehouse",
-  "cost_center",
   "column_break_3",
   "posting_date",
   "posting_time",
   "set_posting_time",
-  "selling_price_list",
   "items_section",
   "update_stock",
   "items",
   "totals_section",
   "total_qty",
   "total",
+  "rounding_adjustment",
   "column_break_16",
   "grand_total",
-  "in_words",
-  "outstanding_amount"
+  "rounded_total",
+  "outstanding_amount",
+  "other_details_section",
+  "customer_name",
+  "selling_price_list",
+  "column_break_22",
+  "set_warehouse",
+  "column_break_24",
+  "cost_center"
  ],
  "fields": [
   {
@@ -55,6 +59,7 @@
    "fetch_from": "customer.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Customer Name",
    "read_only": 1
   },
@@ -101,6 +106,7 @@
    "fieldtype": "Link",
    "label": "Price List",
    "options": "Price List",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -147,12 +153,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "in_words",
-   "fieldtype": "Data",
-   "label": "In Words",
-   "read_only": 1
-  },
-  {
    "fieldname": "outstanding_amount",
    "fieldtype": "Currency",
    "label": "Outstanding Amount",
@@ -171,12 +171,41 @@
    "fieldtype": "Float",
    "label": "Total Quantity",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "rounding_adjustment",
+   "fieldtype": "Currency",
+   "label": "Rounding Adjustment",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rounded_total",
+   "fieldtype": "Currency",
+   "label": "Rounded Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-07 08:48:40.666336",
+ "modified": "2022-10-10 14:33:45.888543",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
