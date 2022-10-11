@@ -135,6 +135,9 @@ frappe.ui.form.on('Invoice Tool Item', {
 });
 
 function make_buttons(frm){
+  frm.add_custom_button('Goto Sales Invoice', () => {
+    frappe.set_route('List', 'Sales Invoice' );
+  }).addClass("btn btn-primary");
   frm.add_custom_button('Clear form', () => {
     frm.reload_doc();
   }).addClass("btn btn-danger");
