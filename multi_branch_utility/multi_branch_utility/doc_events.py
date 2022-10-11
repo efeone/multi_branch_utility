@@ -47,31 +47,6 @@ def apply_additional_discount(doc, method):
 				discount_amount = discount_amount - allocated_amount
 
 @frappe.whitelist()
-def get_last_si_rate(customer, item):
-	customer_si = frappe.db.get_all('Sales Invoice', filters={'customer': customer, 'docstatus': 1})
-	for si in customer_si:
-		sales_invoice = frappe.get_doc('Sales Invoice', si.name)
-		for si_item in sales_invoice.items :
-			if si_item.item_code == item:
-				return si_item.rate
-	return 0
-
-@frappe.whitelist()
-def get_last_pr_rate(item):
-	item_pr = frappe.db.get_all('Purchase Receipt', filters={'docstatus': 1})
-	for pr in item_pr:
-		purchase_receipt = frappe.get_doc('Purchase Receipt', pr.name)
-		for pr_item in purchase_receipt.items:
-			if pr_item.item_code == item:
-				return pr_item.rate
-	return 0
-
-@frappe.whitelist()
-def get_avg_cost(item):
-	stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
-	return stock_ledger_entry.valuation_rate
-
-@frappe.whitelist()
 def set_import_missing_values(doc, method):
 	if doc.items:
 		for item in doc.items:
@@ -83,42 +58,46 @@ def set_import_missing_values(doc, method):
 
 @frappe.whitelist()
 def make_payment(doc, method):
-	if frappe.db.get_single_value('Multi Branch Settings','allow_payment_entry'):
-		if not doc.is_return and doc.payment_type and doc.payment_type=='CASH':
-			mode_of_payment = frappe.get_doc("Mode of Payment", 'Cash')
-			mode_of_payment_account = mode_of_payment.accounts[0].default_account
-			company = frappe.get_last_doc('Company')
-			if doc.doctype == "Sales Invoice":
-				reference_doctype = doc.doctype
-				party_type = "Customer"
-				party = doc.customer
-				paid_to = mode_of_payment_account
-				paid_from = company.default_receivable_account
-				payment_type = "Receive"			
-			if doc.doctype == "Purchase Invoice":
-				reference_doctype = doc.doctype
-				party_type = "Supplier"
-				party = doc.supplier	
-				paid_from = mode_of_payment_account
-				paid_to = company.default_payable_account	
-				payment_type = "Pay"	
-			pay = frappe.new_doc('Payment Entry')
-			pay.payment_type = payment_type
-			pay.mode_of_payment = "Cash"
-			pay.party_type = party_type
-			pay.party = party
-			pay.paid_from = paid_from
-			pay.source_exchange_rate = 1
-			pay.paid_amount = doc.outstanding_amount
-			pay.received_amount = doc.outstanding_amount
-			pay.paid_to = paid_to
-			pay.append("references",{
-				"reference_doctype" : reference_doctype,
-				"reference_name": doc.name,
-				"total_amount": doc.grand_total,
-				"outstanding_amount": doc.outstanding_amount,
-				"allocated_amount": doc.outstanding_amount
-			})
-			pay.submit()
-			frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
-			doc.reload()
+	if frappe.db.get_single_value('Multi Branch Settings', 'allow_payment_entry'):
+		from multi_branch_utility.multi_branch_utility.utils import get_mode_of_payment
+		payment_type_details = get_mode_of_payment(doc.payment_type, doc.cost_center)
+		if not payment_type_details:
+			frappe.throw('Please set Mode of Payment in Payment Type CASH')
+		if payment_type_details:
+			if not doc.is_return and doc.payment_type and doc.payment_type == 'CASH' and payment_type_details.mode_of_payment and payment_type_details.account:
+				company = frappe.get_last_doc('Company')
+				if doc.doctype == "Sales Invoice":
+					reference_doctype = doc.doctype
+					party_type = "Customer"
+					party = doc.customer
+					paid_to = payment_type_details.account
+					paid_from = company.default_receivable_account
+					payment_type = "Receive"
+				if doc.doctype == "Purchase Invoice":
+					reference_doctype = doc.doctype
+					party_type = "Supplier"
+					party = doc.supplier
+					paid_from = payment_type_details.account
+					paid_to = company.default_payable_account
+					payment_type = "Pay"
+				pay = frappe.new_doc('Payment Entry')
+				pay.payment_type = payment_type
+				pay.mode_of_payment = payment_type_details.mode_of_payment
+				pay.party_type = party_type
+				pay.party = party
+				pay.paid_from = paid_from
+				pay.source_exchange_rate = 1
+				pay.paid_amount = doc.outstanding_amount
+				pay.received_amount = doc.outstanding_amount
+				pay.paid_to = paid_to
+				pay.cost_center = doc.cost_center
+				pay.append("references",{
+					"reference_doctype" : reference_doctype,
+					"reference_name": doc.name,
+					"total_amount": doc.grand_total,
+					"outstanding_amount": doc.outstanding_amount,
+					"allocated_amount": doc.outstanding_amount
+				})
+				pay.submit()
+				frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
+				doc.reload()
