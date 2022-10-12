@@ -29,6 +29,10 @@ frappe.ui.form.on('Invoice Tool', {
       });
       frm.refresh_field('items');
     }
+  },
+  customer: function(frm){
+    frm.add_child('items');
+    frm.refresh_field('items');
   }
 });
 

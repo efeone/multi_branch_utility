@@ -134,6 +134,7 @@
    "default": "1",
    "fieldname": "update_stock",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Update Stock",
    "read_only": 1
   },
@@ -147,8 +148,10 @@
    "fieldtype": "Column Break"
   },
   {
+   "bold": 1,
    "fieldname": "grand_total",
    "fieldtype": "Currency",
+   "in_preview": 1,
    "label": "Grand Total",
    "read_only": 1
   },
@@ -205,7 +208,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-10 14:33:45.888543",
+ "modified": "2022-10-12 15:00:45.749015",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
