@@ -148,6 +148,7 @@ function make_buttons(frm){
 
   frm.add_custom_button('Create Invoice', () => {
     if ( check_mandatory_fields(frm)){
+      remove_blank_rows(frm);
       frappe.confirm('Are you sure you want to Approve?',
         (yes) => {
           create_sales_invoice(frm);
@@ -232,4 +233,12 @@ function print_invoice(doc){
           }
       }
   })
+}
+
+function remove_blank_rows(frm){
+  let len = frm.doc.items.length;
+  if(!frm.doc.items[len-1].item_code){
+    frm.get_field('items').grid.grid_rows[len-1].remove();
+    frm.refresh_field('items');
+  }
 }
