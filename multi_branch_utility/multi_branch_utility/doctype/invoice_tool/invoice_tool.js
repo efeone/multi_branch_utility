@@ -138,6 +138,19 @@ frappe.ui.form.on('Invoice Tool Item', {
   }
 });
 
+frappe.ui.keys.on("ctrl+s", function(frm) {
+  console.log("Saving via Keyboard Shortcut");
+  if (check_mandatory_fields(cur_frm)){
+    remove_blank_rows(cur_frm);
+    frappe.confirm('Are you sure you want to Approve?',
+      (yes) => {
+        create_sales_invoice(cur_frm);
+      },(no) => {
+
+    });
+  }
+});
+
 function make_buttons(frm){
   frm.add_custom_button('Goto Sales Invoice', () => {
     frappe.set_route('List', 'Sales Invoice' );
@@ -237,7 +250,7 @@ function print_invoice(doc){
 
 function remove_blank_rows(frm){
   let len = frm.doc.items.length;
-  if(!frm.doc.items[len-1].item_code){
+  if(!frm.doc.items[len-1].item_code && len>1){
     frm.get_field('items').grid.grid_rows[len-1].remove();
     frm.refresh_field('items');
   }
