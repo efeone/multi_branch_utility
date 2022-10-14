@@ -4,7 +4,7 @@ frappe.ui.form.on('Sales Invoice', {
     },
     on_submit(frm)
     {
-      window.open("/printview?doctype=Sales%20Invoice&name="+ frm.doc.name +"&trigger_print=1&format=KAS%20VAT%20Invoice%20New&no_letterhead=0&letterhead=Gateway%20Wholesale&settings=%7B%7D&_lang=en-US")
+      print_invoice(frm.doc)
     },
     refresh(frm){
         frm.set_value('update_stock', 1);
@@ -35,7 +35,7 @@ frappe.ui.form.on('Sales Invoice', {
                 }
             })
         }
-    },    
+    },
 });
 frappe.ui.form.on('Sales Invoice Item', {
     item_code: function (frm, cdt, cdn) {
@@ -77,4 +77,31 @@ frappe.ui.form.on('Sales Invoice Item', {
             })
         }
     }
+
 });
+function print_invoice(doc){
+  frappe.call({
+      method: 'multi_branch_utility.multi_branch_utility.utils.get_print_format_and_lh',
+      args: {
+          'doctype': doc.doctype,
+          'cost_center': doc.cost_center
+      },
+      callback: function (r) {
+          if(r && r.message){
+            let defaults = r.message;
+            let print_format = "Standard";
+            let letter_head = ""
+            if(defaults['print_format']){
+              print_format = defaults['print_format']
+            }
+            if(defaults['letter_head']){
+              letter_head = defaults['letter_head']
+              window.open("/printview?doctype=Sales%20Invoice&name="+ doc.name +"&trigger_print=1&format="+ print_format +"&no_letterhead=0&letterhead="+ letter_head +"&settings=%7B%7D&_lang=en-US")
+            }
+            else{
+              window.open("/printview?doctype=Sales%20Invoice&name="+ doc.name +"&trigger_print=1&format="+ print_format +"&no_letterhead=1&settings=%7B%7D&_lang=en-US")
+            }
+          }
+      }
+  })
+}
