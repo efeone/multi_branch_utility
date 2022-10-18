@@ -25,6 +25,8 @@
   "grand_total",
   "rounded_total",
   "outstanding_amount",
+  "advance_payments_section",
+  "allocate_advances_automatically",
   "other_details_section",
   "customer_name",
   "selling_price_list",
@@ -97,8 +99,7 @@
    "fieldtype": "Link",
    "label": "Cost Center",
    "options": "Cost Center",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fetch_from": "customer.default_price_list",
@@ -106,8 +107,7 @@
    "fieldtype": "Link",
    "label": "Price List",
    "options": "Price List",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "items_section",
@@ -127,8 +127,7 @@
    "fieldtype": "Link",
    "label": "Source Warehouse",
    "options": "Warehouse",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "default": "1",
@@ -203,12 +202,24 @@
   {
    "fieldname": "column_break_24",
    "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "advance_payments_section",
+   "fieldtype": "Section Break",
+   "label": "Advance Payments"
+  },
+  {
+   "default": "0",
+   "fieldname": "allocate_advances_automatically",
+   "fieldtype": "Check",
+   "label": "Allocate Advances Automatically (FIFO)"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-12 15:00:45.749015",
+ "modified": "2022-10-18 08:36:33.576403",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
