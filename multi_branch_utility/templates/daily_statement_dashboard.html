@@ -1,0 +1,156 @@
+<div>
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CASH</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CREDIT</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Sales</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].cash_sales }}</b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Sales Return</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].cash_sales_return }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[0].cash_sales_total }} </b></h4>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Sales</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].credit_sales }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Sales Return</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].credit_sales_return }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[0].credit_sales_total }} </b></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 94%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Total Sales ( Cash + Credit ) : {{ statement[0].total_sales }} </b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row" style="margin-top:10px;">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CASH</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CREDIT</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Purchase</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].cash_purchase }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Purchase Return</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].cash_purchase_return}} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[1].cash_purchase_total }} </b></h4>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Purchase</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].credit_purchase }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Purchase Return</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].credit_purchase_return}} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[1].credit_purchase_total }} </b></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 94%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Total Purchase ( Cash + Credit ): {{ statement[1].total_purchase }} </b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row" style="margin-top:10px;">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Payments</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Other Vouchers</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Payment Suppliers</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].supplier_cash }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Receipt Customers</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].customer_cash }} </b><h5>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Bank Transactions</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].bank_transaction }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>ACT Journal Entry</b></h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].journal_entry }} </b><h5>
+      </div>
+    </div>
+  </div>
+</div>

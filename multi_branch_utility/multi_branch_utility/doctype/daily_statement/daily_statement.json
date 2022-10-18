@@ -1,0 +1,76 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "allow_rename": 1,
+ "creation": "2022-10-15 07:05:14.621195",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "filters_section",
+  "date",
+  "column_break_3",
+  "cost_center",
+  "daily_statement_section",
+  "daily_statement_dashboard"
+ ],
+ "fields": [
+  {
+   "fieldname": "filters_section",
+   "fieldtype": "Section Break",
+   "label": "Filters"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "daily_statement_section",
+   "fieldtype": "Section Break",
+   "label": "Daily Statement"
+  },
+  {
+   "fieldname": "daily_statement_dashboard",
+   "fieldtype": "HTML",
+   "label": "Daily Statement Dashboard"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-10-17 10:35:59.909102",
+ "modified_by": "Administrator",
+ "module": "Multi Branch Utility",
+ "name": "Daily Statement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
