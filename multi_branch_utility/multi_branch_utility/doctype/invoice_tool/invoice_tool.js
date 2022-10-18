@@ -185,7 +185,7 @@ function create_sales_invoice(frm){
       rounding_adjustment: frm.doc.rounding_adjustment,
 			items: frm.doc.items,
 			docstatus: 1,
-      allocate_advances_automatically: 1
+      allocate_advances_automatically: frm.doc.allocate_advances_automatically
 		}).then(function(doc) {
 			frappe.show_alert('Sales Invoice Created..', 5);
       print_invoice(doc)
