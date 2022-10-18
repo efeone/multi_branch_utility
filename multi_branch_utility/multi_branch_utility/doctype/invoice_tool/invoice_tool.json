@@ -8,8 +8,9 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "customer",
   "payment_type",
+  "customer",
+  "allocate_advances_automatically",
   "column_break_3",
   "posting_date",
   "posting_time",
@@ -25,8 +26,6 @@
   "grand_total",
   "rounded_total",
   "outstanding_amount",
-  "advance_payments_section",
-  "allocate_advances_automatically",
   "other_details_section",
   "customer_name",
   "selling_price_list",
@@ -204,22 +203,17 @@
    "fieldtype": "Column Break"
   },
   {
-   "collapsible": 1,
-   "fieldname": "advance_payments_section",
-   "fieldtype": "Section Break",
-   "label": "Advance Payments"
-  },
-  {
    "default": "0",
    "fieldname": "allocate_advances_automatically",
    "fieldtype": "Check",
    "label": "Allocate Advances Automatically (FIFO)"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-18 08:36:33.576403",
+ "modified": "2022-10-18 09:58:17.117371",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
