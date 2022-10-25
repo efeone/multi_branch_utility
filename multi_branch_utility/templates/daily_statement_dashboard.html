@@ -1,0 +1,186 @@
+<div>
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CASH</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CREDIT</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Sales</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Sales Invoice', 'CASH')"> {{ statement[3].cash_sales_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].cash_sales }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Sales Return </b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Sales Invoice', 'CASH', 1)"> {{ statement[3].cash_sales_return_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].cash_sales_return }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[0].cash_sales_total }} </b></h4>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Sales</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Sales Invoice', 'CREDIT')"> {{ statement[3].credit_sales_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].credit_sales }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Sales Return</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Sales Invoice', 'CREDIT', 1)"> {{ statement[3].credit_sales_return_count }}</a> </u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[0].credit_sales_return }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[0].credit_sales_total }} </b></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 94%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Total Sales ( Cash + Credit ) : {{ statement[0].total_sales }} </b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row" style="margin-top:10px;">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CASH</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>CREDIT</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Purchase</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Purchase Invoice', 'CASH',)"> {{ statement[4].cash_purchase_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].cash_purchase }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Purchase Return</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Purchase Invoice', 'CASH', 1)"> {{ statement[4].cash_purchase_return_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].cash_purchase_return}} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[1].cash_purchase_total }} </b></h4>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Purchase</b>: <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Purchase Invoice', 'CREDIT')"> {{ statement[4].credit_purchase_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].credit_purchase }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><u><b>Purchase Return</b> : <a onclick="set_route_options('{{posting_date}}', '{{cost_center}}', 'Purchase Invoice', 'CREDIT', 1)"> {{ statement[4].credit_purchase_return_count }}</a></u></h4>
+        <h5 style="text-align:center;"><b> {{ statement[1].credit_purchase_return}} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Total : {{ statement[1].credit_purchase_total }} </b></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 94%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Total Purchase ( Cash + Credit ): {{ statement[1].total_purchase }} </b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row" style="margin-top:10px;">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Payments</b></p>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); background-color: #D1D8DF">
+      <div class="container" style="padding: 4px;">
+        <p style="text-align:center; font-size: 20px;"><b>Other Vouchers</b></p>
+      </div>
+    </div>
+    <div style="width: 3%;"></div>
+  </div>
+
+  <div class="row">
+    <div style="width: 3%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Payment Suppliers</b> : <a onclick="set_route_options_for_payments('{{posting_date}}', '{{cost_center}}', 'Pay')"> {{ statement[5].supplier_cash_count }} </a> </h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].supplier_cash }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Receipt Customers</b> :  <a onclick="set_route_options_for_payments('{{posting_date}}', '{{cost_center}}', 'Receive')"> {{ statement[5].customer_cash_count }} </a> </h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].customer_cash }} </b><h5>
+      </div>
+    </div>
+    <div style="width: 4%;"></div>
+    <div class="card" style="width: 45%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>Bank Transactions</b> : <a onclick="set_route_options_for_payments('{{posting_date}}', '{{cost_center}}', '')"> {{ statement[5].bank_transaction_count }} </a></h4>
+        <h5 style="text-align:center;"><b> {{ statement[2].bank_transaction }} </b><h5>
+      </div>
+      <div class="container" style="padding: 4px;">
+        <h4 style="text-align:center;"><b>ACT Journal Entry</b> : <a onclick="set_route_options_for_journals('{{posting_date}}', '{{cost_center}}')"> {{ statement[5].journal_entry_count }} </a></h4>
+        <h5 style="text-align:center;"><b> Credit : {{ statement[2].journal_entry_credit }} &nbsp;&nbsp;&nbsp; Debit : {{ statement[2].journal_entry_debit }} </b><h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function set_route_options(posting_date, cost_center, doctype, payment_type, is_return=0) {
+    frappe.route_options = {
+      'posting_date': posting_date,
+      'cost_center': cost_center,
+      'payment_type': payment_type,
+      'is_return': is_return,
+      'docstatus': 1
+    };
+    frappe.set_route('List', doctype );
+  }
+  function set_route_options_for_payments(posting_date, cost_center, payment_type) {
+    frappe.route_options = {
+      'posting_date': posting_date,
+      'cost_center': cost_center,
+      'payment_type': payment_type,
+      'docstatus': 1
+    };
+    frappe.set_route('List', 'Payment Entry' );
+  }
+  function set_route_options_for_journals(posting_date, cost_center) {
+    frappe.route_options = {
+      'posting_date': posting_date,
+      'cost_center': cost_center,
+      'docstatus': 1
+    };
+    frappe.set_route('List', 'Journal Entry' );
+  }
+</script>

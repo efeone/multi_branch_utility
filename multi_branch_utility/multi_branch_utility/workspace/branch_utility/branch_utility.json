@@ -13,7 +13,7 @@
  "is_standard": 1,
  "label": "Branch Utility",
  "links": [],
- "modified": "2022-10-11 08:18:23.893873",
+ "modified": "2022-10-20 14:59:01.921711",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Branch Utility",
@@ -55,6 +55,12 @@
    "doc_view": "List",
    "label": "Supplier",
    "link_to": "Supplier",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Daily Statement",
+   "link_to": "Daily Statement",
    "type": "DocType"
   }
  ]

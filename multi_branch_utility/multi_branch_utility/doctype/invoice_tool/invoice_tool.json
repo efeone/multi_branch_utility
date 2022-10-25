@@ -8,8 +8,9 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "customer",
   "payment_type",
+  "customer",
+  "allocate_advances_automatically",
   "column_break_3",
   "posting_date",
   "posting_time",
@@ -97,8 +98,7 @@
    "fieldtype": "Link",
    "label": "Cost Center",
    "options": "Cost Center",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fetch_from": "customer.default_price_list",
@@ -106,8 +106,7 @@
    "fieldtype": "Link",
    "label": "Price List",
    "options": "Price List",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "items_section",
@@ -127,8 +126,7 @@
    "fieldtype": "Link",
    "label": "Source Warehouse",
    "options": "Warehouse",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "default": "1",
@@ -203,12 +201,19 @@
   {
    "fieldname": "column_break_24",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allocate_advances_automatically",
+   "fieldtype": "Check",
+   "label": "Allocate Advances Automatically (FIFO)"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-12 15:00:45.749015",
+ "modified": "2022-10-18 09:58:17.117371",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
