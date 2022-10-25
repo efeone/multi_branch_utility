@@ -19,7 +19,7 @@ def get_daily_statement_values(cost_center, posting_date=today() , payment_type=
 	sales_details_count = { 'cash_sales_count':0, 'credit_sales_count':0 , 'cash_sales_return_count':0, 'credit_sales_return_count':0 }
 	purchase_details = { 'cash_purchase':0, 'credit_purchase':0 , 'cash_purchase_return':0, 'credit_purchase_return':0, 'cash_purchase_total':0, 'credit_purchase_total':0, 'total_purchase':0 }
 	purchase_details_count = { 'cash_purchase_count':0, 'credit_purchase_count':0 , 'cash_purchase_return_count':0, 'credit_purchase_return_count':0 }
-	payment_entries = { 'customer_cash':0, 'supplier_cash':0, 'bank_transaction':0, 'journal_entry':0 }
+	payment_entries = { 'customer_cash':0, 'supplier_cash':0, 'bank_transaction':0, 'journal_entry_credit':0, 'journal_entry_debit':0 }
 	payment_entries_count = { 'customer_cash_count':0, 'supplier_cash_count':0, 'bank_transaction_count':0, 'journal_entry_count':0 }
 
 	#Sales Details
@@ -65,10 +65,11 @@ def get_daily_statement_values(cost_center, posting_date=today() , payment_type=
 	payment_entries['supplier_cash'] = get_payment_entries(posting_date, cost_center, 'Pay', cash_mode_of_payment)[0]
 	payment_entries['bank_transaction'] = get_payment_entries(posting_date, cost_center, 'Receive', bank_mode_of_payment)[0]
 	payment_entries['bank_transaction'] = payment_entries['bank_transaction'] - get_payment_entries(posting_date, cost_center, 'Pay', bank_mode_of_payment)[0]
-	payment_entries['journal_entry'] = get_journal_entries(posting_date, cost_center)[0]
+	payment_entries['journal_entry_debit'] = get_journal_entries(posting_date, cost_center)[0]
+	payment_entries['journal_entry_credit'] = get_journal_entries(posting_date, cost_center)[1]
 	payment_entries_count['customer_cash_count'] = get_payment_entries(posting_date, cost_center, 'Receive', cash_mode_of_payment)[1]
 	payment_entries_count['supplier_cash_count'] = get_payment_entries(posting_date, cost_center, 'Pay', cash_mode_of_payment)[1]
-	payment_entries_count['journal_entry_count'] = get_journal_entries(posting_date, cost_center)[1]
+	payment_entries_count['journal_entry_count'] = get_journal_entries(posting_date, cost_center)[2]
 	payment_entries_count['bank_transaction_count'] = get_payment_entries(posting_date, cost_center, 'Pay', bank_mode_of_payment)[1]
 	payment_entries_count['bank_transaction_count'] = payment_entries_count['bank_transaction_count'] + get_payment_entries(posting_date, cost_center, 'Receive', bank_mode_of_payment)[1]
 
@@ -127,17 +128,20 @@ def get_payment_entries(posting_date, cost_center, type, mode_of_payment=None):
 def get_journal_entries(posting_date, cost_center):
 	query = """
 		SELECT
-			IFNULL(SUM(total_debit), 0) as amount,
+			IFNULL(SUM(jea.debit), 0) as debit,
+			IFNULL(SUM(jea.credit), 0) as credit,
 			IFNULL(COUNT(*), 0) as count
 		FROM
-			`tabJournal Entry` as je
+			`tabJournal Entry` as je,
+			`tabJournal Entry Account` as jea
 		WHERE
 			je.posting_date = %(posting_date)s AND
-			je.cost_center = %(cost_center)s AND
+			jea.cost_center = %(cost_center)s AND
+			jea.parent = je.name AND
 			je.docstatus = 1
 	"""
 	output = frappe.db.sql(query.format(), { 'posting_date': posting_date, 'cost_center': cost_center }, as_dict=True)
-	return (output[0].amount, output[0].count)
+	return (output[0].debit, output[0].credit, output[0].count)
 
 @frappe.whitelist()
 def format_to_currency(input_dict, currency):
