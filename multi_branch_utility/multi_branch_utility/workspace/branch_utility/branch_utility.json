@@ -1,67 +1,82 @@
 {
- "category": "Modules",
  "charts": [],
- "creation": "2022-10-11 08:12:32.555839",
- "developer_mode_only": 0,
- "disable_user_customization": 0,
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Multi Branch Utility</span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Invoice Tool\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Daily Statement\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Supplier\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Multi Branch Settings\",\"col\":3}}]",
+ "creation": "2022-10-26 16:01:46.029183",
  "docstatus": 0,
  "doctype": "Workspace",
- "extends_another_page": 0,
+ "for_user": "",
  "hide_custom": 0,
+ "icon": "",
  "idx": 0,
- "is_default": 0,
- "is_standard": 1,
  "label": "Branch Utility",
  "links": [],
- "modified": "2022-10-20 14:59:01.921711",
+ "modified": "2022-10-26 16:36:20.114086",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Branch Utility",
  "owner": "Administrator",
- "pin_to_bottom": 0,
- "pin_to_top": 1,
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 0.0,
  "shortcuts": [
   {
-   "doc_view": "New",
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Invoice Tool",
    "link_to": "Invoice Tool",
    "type": "DocType"
   },
   {
-   "doc_view": "List",
-   "label": "Sales Invoice",
-   "link_to": "Sales Invoice",
-   "type": "DocType"
-  },
-  {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Purchase Invoice",
    "link_to": "Purchase Invoice",
    "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Sales Invoice",
+   "link_to": "Sales Invoice",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Item",
    "link_to": "Item",
    "type": "DocType"
   },
   {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Customer",
    "link_to": "Customer",
    "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Multi Branch Settings",
+   "link_to": "Multi Branch Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Supplier",
    "link_to": "Supplier",
    "type": "DocType"
   },
   {
+   "color": "Grey",
    "doc_view": "List",
    "label": "Daily Statement",
    "link_to": "Daily Statement",
    "type": "DocType"
   }
- ]
+ ],
+ "title": "Branch Utility"
 }
