@@ -33,6 +33,34 @@ frappe.ui.form.on('Invoice Tool', {
   customer: function(frm){
     frm.add_child('items');
     frm.refresh_field('items');
+    if(frm.doc.customer && frm.doc.company) {
+      console.log("ooooo");
+      if(!frm.doc.posting_date) {
+        frappe.msgprint(__("Please select Posting Date before selecting Customer"))
+        frm.set_value("customer", "");
+        return ;
+      }
+      frm.set_party_account_based_on_party = true;
+
+      let company_currency = frappe.get_doc(":Company", frm.doc.company).default_currency;
+
+      return frappe.call({
+        method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_party_details",
+        args: {
+          company: frm.doc.company,
+          party_type: 'Customer',
+          party: frm.doc.customer,
+          date: frm.doc.posting_date,
+          cost_center: frm.doc.cost_center
+        },
+        callback: function(r) {
+          if(r.message) {
+              // console.log(r.message.party_balance);
+              frm.set_value("customer_balance", r.message.party_balance)
+          }
+        }
+      });
+    }
   }
 });
 
