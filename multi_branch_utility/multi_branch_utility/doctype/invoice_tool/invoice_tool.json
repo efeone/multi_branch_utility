@@ -10,8 +10,10 @@
   "naming_series",
   "payment_type",
   "customer",
+  "customer_balance",
   "allocate_advances_automatically",
   "column_break_3",
+  "company",
   "posting_date",
   "posting_time",
   "set_posting_time",
@@ -207,16 +209,30 @@
    "fieldname": "allocate_advances_automatically",
    "fieldtype": "Check",
    "label": "Allocate Advances Automatically (FIFO)"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_balance",
+   "fieldtype": "Data",
+   "label": "Customer Balance",
+   "read_only": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-18 09:58:17.117371",
+ "modified": "2022-10-28 06:58:07.891365",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -226,6 +242,7 @@
    "print": 1,
    "read": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   },
@@ -235,10 +252,12 @@
    "print": 1,
    "read": 1,
    "role": "Accounts User",
+   "select": 1,
    "share": 1,
    "write": 1
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
