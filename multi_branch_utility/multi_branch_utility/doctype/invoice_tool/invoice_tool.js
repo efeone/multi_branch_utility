@@ -2,6 +2,10 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Invoice Tool', {
+  onload: function(frm) {
+		const default_company = frappe.defaults.get_default('company');
+		frm.set_value('company', default_company);
+  },
   refresh: function(frm) {
     frm.set_value('payment_type','CASH');
     frm.disable_save();
