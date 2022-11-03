@@ -3,6 +3,7 @@
 
 frappe.ui.form.on('Invoice Tool', {
   onload: function(frm) {
+    frm.add_child('items');
 		const default_company = frappe.defaults.get_default('company');
 		frm.set_value('company', default_company);
   },
@@ -35,7 +36,6 @@ frappe.ui.form.on('Invoice Tool', {
     }
   },
   customer: function(frm){
-    frm.add_child('items');
     frm.refresh_field('items');
     if(frm.doc.customer && frm.doc.company && frm.doc.payment_type == 'CREDIT') {
       if(!frm.doc.posting_date) {
