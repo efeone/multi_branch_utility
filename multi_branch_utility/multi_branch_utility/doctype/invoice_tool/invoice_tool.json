@@ -34,7 +34,8 @@
   "column_break_22",
   "set_warehouse",
   "column_break_24",
-  "cost_center"
+  "cost_center",
+  "cost_center_abbr"
  ],
  "fields": [
   {
@@ -217,12 +218,20 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",
-   "read_only": 1
+   "reqd": 1
   },
   {
    "fieldname": "customer_balance",
    "fieldtype": "Data",
    "label": "Customer Balance",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cost_center.abbr",
+   "fieldname": "cost_center_abbr",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Cost Center Abbr",
    "read_only": 1
   }
  ],
@@ -230,7 +239,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-11-02 10:26:23.631103",
+ "modified": "2022-11-03 06:30:13.683494",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool",
