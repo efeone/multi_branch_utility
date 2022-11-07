@@ -72,14 +72,14 @@ def make_payment(doc, method):
 						party_type = "Customer"
 						party = doc.customer
 						paid_to = payment_type_details.account
-						paid_from = company.default_receivable_account
+						paid_from =  get_party_account(party_type, party, company.name)
 						payment_type = "Receive"
 					if doc.doctype == "Purchase Invoice":
 						reference_doctype = doc.doctype
 						party_type = "Supplier"
 						party = doc.supplier
 						paid_from = payment_type_details.account
-						paid_to = company.default_payable_account
+						paid_to =  get_party_account(party_type, party, company)
 						payment_type = "Pay"
 					pay = frappe.new_doc('Payment Entry')
 					pay.payment_type = payment_type
