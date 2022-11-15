@@ -115,10 +115,12 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values",
-		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment",
+		"autoname": "multi_branch_utility.multi_branch_utility.utils.invoice_auto_name"
 	},
 	"Purchase Invoice": {
-		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment"
+		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment",
+		"autoname": "multi_branch_utility.multi_branch_utility.utils.invoice_auto_name"
 	}
 }
 fixtures = ["Print Format", "Letter Head", "Payment Type"]

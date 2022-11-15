@@ -80,3 +80,16 @@ def get_print_format_and_lh(doctype, cost_center):
                 defaults['print_format'] = cost_center_default.print_format
                 defaults['letter_head'] = cost_center_default.letter_head
     return defaults
+
+@frappe.whitelist()
+def invoice_auto_name(doc, method):
+    from frappe.model.naming import make_autoname
+    multi_branch_settings = frappe.get_doc('Multi Branch Settings')
+    cost_center_defaults = multi_branch_settings.cost_center_defaults
+    if cost_center_defaults:
+        for cost_center_default in cost_center_defaults:
+            if cost_center_default.cost_center == doc.cost_center and cost_center_default.document_type == doc.doctype:
+                invoice_series = cost_center_default.invoice_series
+                doc.name = make_autoname(invoice_series)
+
+

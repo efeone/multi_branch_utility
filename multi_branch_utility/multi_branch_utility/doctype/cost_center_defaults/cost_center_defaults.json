@@ -9,7 +9,8 @@
   "cost_center",
   "document_type",
   "letter_head",
-  "print_format"
+  "print_format",
+  "invoice_series"
  ],
  "fields": [
   {
@@ -40,17 +41,24 @@
    "in_list_view": 1,
    "label": "Document Type",
    "options": "DocType"
+  },
+  {
+   "fieldname": "invoice_series",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Invoice Series"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-10-10 14:42:14.903571",
+ "modified": "2022-11-15 15:45:11.194634",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Cost Center Defaults",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
