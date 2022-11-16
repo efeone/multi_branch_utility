@@ -79,7 +79,7 @@ def make_payment(doc, method):
 						party_type = "Supplier"
 						party = doc.supplier
 						paid_from = payment_type_details.account
-						paid_to =  get_party_account(party_type, party, company)
+						paid_to =  get_party_account(party_type, party, company.name)
 						payment_type = "Pay"
 					pay = frappe.new_doc('Payment Entry')
 					pay.payment_type = payment_type
