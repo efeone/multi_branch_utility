@@ -84,6 +84,7 @@ def make_payment(doc, method):
 					pay = frappe.new_doc('Payment Entry')
 					pay.payment_type = payment_type
 					pay.mode_of_payment = payment_type_details.mode_of_payment
+					pay.posting_date = doc.posting_date
 					pay.party_type = party_type
 					pay.party = party
 					pay.paid_from = paid_from
