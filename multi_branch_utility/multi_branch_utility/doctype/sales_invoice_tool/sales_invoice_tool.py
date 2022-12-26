@@ -1,8 +1,10 @@
 # Copyright (c) 2022, efeone Pvt. Ltd. and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
+from frappe import _
 
 class SalesInvoiceTool(Document):
-	pass
+	def validate(self):
+		frappe.throw(_('No Permision To Save!'))
