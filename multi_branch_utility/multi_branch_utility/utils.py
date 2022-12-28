@@ -92,4 +92,12 @@ def invoice_auto_name(doc, method):
                 invoice_series = cost_center_default.invoice_series
                 doc.name = make_autoname(invoice_series)
 
+@frappe.whitelist()
+def get_cost_center(warehouse):
+    warehouse_doc = frappe.get_doc("Warehouse",warehouse)
+    return  warehouse_doc.cost_center
 
+@frappe.whitelist()
+def get_item_cost_center(item_code):
+    item_doc = frappe.get_doc("Item",item_code)
+    return  item_doc.cost_center
