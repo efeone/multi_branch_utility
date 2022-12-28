@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Multi Branch Utility</span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Invoice Tool\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Daily Statement\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Party Repayment\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Supplier\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Multi Branch Settings\",\"col\":3}}]",
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Multi Branch Utility</span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Invoice Tool\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Daily Statement\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Party Repayment\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Supplier\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Multi Branch Settings\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Return\",\"col\":3}}]",
  "creation": "2022-10-26 16:01:46.029183",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -10,7 +10,7 @@
  "idx": 0,
  "label": "Branch Utility",
  "links": [],
- "modified": "2022-10-26 14:42:07.461370",
+ "modified": "2022-12-26 12:44:08.880994",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Branch Utility",
@@ -31,8 +31,8 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Invoice Tool",
-   "link_to": "Invoice Tool",
+   "label": "Quick Invoice Tool",
+   "link_to": "Sales Invoice Tool",
    "type": "DocType"
   },
   {
@@ -40,13 +40,6 @@
    "doc_view": "List",
    "label": "Purchase Invoice",
    "link_to": "Purchase Invoice",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Sales Invoice",
-   "link_to": "Sales Invoice",
    "type": "DocType"
   },
   {
