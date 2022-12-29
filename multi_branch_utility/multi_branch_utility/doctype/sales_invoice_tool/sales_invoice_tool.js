@@ -120,7 +120,7 @@ frappe.ui.form.on('Invoice Tool Item', {
                     'item': row.item_code
                 },
                 callback: function (r) {
-                    row.previous_selling_rate = r.message;
+                    row.previous_sales_price = r.message;
                 }
             });
             frappe.call({
@@ -173,7 +173,7 @@ frappe.ui.keys.on("ctrl+s", function(frm) {
         (yes) => {
           create_sales_invoice(cur_frm);
         },(no) => {
-  
+
       });
     }
 });
@@ -185,7 +185,7 @@ function make_buttons(frm){
     frm.add_custom_button('Clear form', () => {
       frm.reload_doc();
     }).addClass("btn btn-danger");
-  
+
     frm.add_custom_button('Create Invoice', () => {
       if ( check_mandatory_fields(frm)){
         remove_blank_rows(frm);
@@ -193,12 +193,12 @@ function make_buttons(frm){
           (yes) => {
             create_sales_invoice(frm);
           },(no) => {
-  
+
         });
       }
     }).addClass("btn btn-primary");
 }
-  
+
 function create_sales_invoice(frm){
     frappe.db.insert({
               doctype: 'Sales Invoice',
@@ -219,7 +219,7 @@ function create_sales_invoice(frm){
         frm.reload_doc();
           });
 }
-  
+
 function check_mandatory_fields(frm){
     if (!frm.doc.customer) { frappe.throw(__('Customer is Required!')); }
     if (!frm.doc.posting_date) { frappe.throw(__('Posting Date is Required!')); }
@@ -229,7 +229,7 @@ function check_mandatory_fields(frm){
     if (!frm.doc.items.length) { frappe.throw(__('Item is Required!')); }
     return 1
 }
-  
+
 function calculate_totals(frm){
     var total_qty = 0;
     var total_amount = 0;
@@ -248,7 +248,7 @@ function calculate_totals(frm){
     frm.set_value('rounding_adjustment', frm.doc.rounded_total - frm.doc.grand_total );
     frm.set_value('outstanding_amount', frm.doc.rounded_total);
 }
-  
+
 function print_invoice(doc){
     frappe.call({
         method: 'multi_branch_utility.multi_branch_utility.utils.get_print_format_and_lh',
@@ -275,7 +275,7 @@ function print_invoice(doc){
         }
     })
 }
-  
+
 function remove_blank_rows(frm){
     let len = frm.doc.items.length;
     if(!frm.doc.items[len-1].item_code && len>1){
@@ -283,4 +283,3 @@ function remove_blank_rows(frm){
         frm.refresh_field('items');
     }
 }
-  
