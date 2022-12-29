@@ -103,3 +103,19 @@ def make_payment(doc, method):
 					pay.submit()
 					frappe.msgprint(msg='Payment Enrty against '+ doc.name + ' is completed', title='Message', alert="True")
 					doc.reload()
+
+@frappe.whitelist()
+def stock_entry_before_validate(doc, method):
+	for item in doc.items:
+		if item.item_code:
+			item_doc = frappe.get_doc('Item', item.item_code)
+			if item_doc.cost_center:
+				item.cost_center = item_doc.cost_center
+			elif item.s_warehouse:
+				warehouse = frappe.get_doc('Warehouse', item.s_warehouse)
+				if warehouse.cost_center:
+					item.cost_center = warehouse.cost_center
+			elif item.t_warehouse:
+				warehouse = frappe.get_doc('Warehouse', item.t_warehouse)
+				if warehouse.cost_center:
+					item.cost_center = warehouse.cost_center
