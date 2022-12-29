@@ -17,7 +17,6 @@
   "company",
   "posting_date",
   "posting_time",
-  "set_posting_time",
   "items_section",
   "update_stock",
   "items",
@@ -100,12 +99,6 @@
    "fieldtype": "Time",
    "label": "Posting Time",
    "read_only_depends_on": "eval:!doc.set_posting_time"
-  },
-  {
-   "default": "0",
-   "fieldname": "set_posting_time",
-   "fieldtype": "Check",
-   "label": "Edit Posting Date and Time"
   },
   {
    "fieldname": "items_section",
@@ -240,7 +233,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-12-26 10:14:42.099870",
+ "modified": "2022-12-29 09:17:40.187997",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Tool",
