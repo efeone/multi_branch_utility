@@ -148,6 +148,8 @@ fixtures = ["Print Format", "Letter Head", "Payment Type"]
 # 	]
 # }
 
+after_migrate = ["multi_branch_utility.multi_branch_utility.utils.set_payment_types"]
+
 # Testing
 # -------
 

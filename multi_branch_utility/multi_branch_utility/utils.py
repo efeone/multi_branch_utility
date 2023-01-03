@@ -101,3 +101,12 @@ def get_cost_center(warehouse):
 def get_item_cost_center(item_code):
     item_doc = frappe.get_doc("Item",item_code)
     return  item_doc.cost_center
+
+@frappe.whitelist()
+def set_payment_types():
+    payment_types = ['CREDIT', 'BANK', 'CASH']
+    for payment_type in payment_types:
+        if not frappe.db.exists('Payment Type', payment_type):
+            doc = frappe.new_doc('Payment Type')
+            doc.payment_type = payment_type
+            doc.save()
