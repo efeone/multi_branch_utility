@@ -57,9 +57,17 @@ frappe.ui.form.on("Sales Invoice Tool", {
                   frm.set_value('customer_balance', r.message.party_balance)
                   frm.set_value('allocate_advances_automatically', 1)
               }
+							else {
+								frm.set_value('customer_balance', 0)
+								frm.set_value('allocate_advances_automatically', 0)
+							}
             }
           });
         }
+				else {
+					frm.set_value('customer_balance', 0)
+					frm.set_value('allocate_advances_automatically', 0)
+				}
       }
 });
 
