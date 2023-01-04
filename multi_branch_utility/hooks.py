@@ -115,6 +115,7 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values",
+		"validate": "multi_branch_utility.multi_branch_utility.doc_events.sales_invoice_validate",
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment",
 		"autoname": "multi_branch_utility.multi_branch_utility.utils.invoice_auto_name"
 	},
@@ -126,7 +127,7 @@ doc_events = {
 		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.stock_entry_before_validate",
 	},
 }
-fixtures = ["Print Format", "Letter Head", "Payment Type"]
+fixtures = ["Print Format", "Letter Head"]
 # Scheduled Tasks
 # ---------------
 
