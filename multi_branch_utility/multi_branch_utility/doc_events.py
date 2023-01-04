@@ -5,6 +5,7 @@ from frappe.model.document import Document
 from datetime import date,datetime
 from frappe.utils import *
 from erpnext.accounts.party import get_party_account
+from multi_branch_utility.multi_branch_utility.utils import get_print_format_and_lh
 
 @frappe.whitelist()
 def apply_additional_discount(doc, method):
@@ -119,3 +120,10 @@ def stock_entry_before_validate(doc, method):
 				warehouse = frappe.get_doc('Warehouse', item.t_warehouse)
 				if warehouse.cost_center:
 					item.cost_center = warehouse.cost_center
+
+@frappe.whitelist()
+def sales_invoice_validate(doc, method):
+	if doc.cost_center:
+		defaults = get_print_format_and_lh(doc.doctype, doc.cost_center)
+		if defaults['letter_head']:
+			doc.letter_head = defaults['letter_head']
