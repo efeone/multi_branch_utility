@@ -110,3 +110,13 @@ def set_payment_types():
             doc = frappe.new_doc('Payment Type')
             doc.payment_type = payment_type
             doc.save()
+
+@frappe.whitelist()
+def get_item_details(customer, item, price_list, warehouse):
+    item_details = { 'price_list_rate':0, 'available_qty':0, 'avg_cost':0, 'last_si_rate':0, 'last_pr_rate':0 }
+    item_details['last_si_rate'] = get_last_si_rate(customer, item)
+    item_details['last_pr_rate'] = get_last_pr_rate(item)
+    item_details['avg_cost'] = get_avg_cost(item)
+    item_details['price_list_rate'] = get_price_list_rate(price_list, item)
+    item_details['available_qty'] = get_available_qty(warehouse, item)
+    return item_details  

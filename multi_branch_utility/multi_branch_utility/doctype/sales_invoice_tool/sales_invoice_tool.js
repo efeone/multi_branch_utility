@@ -86,6 +86,15 @@ frappe.ui.form.on('Invoice Tool Item', {
     },
     item_code: function (frm, cdt, cdn) {
         var row = locals[cdt][cdn];
+				if(!row.item_code){
+	        row.qty = 0;
+	        row.rate = 0;
+	        row.actual_qty = 0;
+	        row.average_cost = 0;
+	        row.previous_sales_price = 0;
+	        row.amount = 0;
+					frm.refresh_field('items')
+	      }
         if (!frm.doc.customer) {
           frm.clear_table('items');
           frm.refresh_field('items');
@@ -96,60 +105,35 @@ frappe.ui.form.on('Invoice Tool Item', {
           frm.refresh_field('items');
           frappe.throw(__('Source Warehouse is Required!'));
         }
-        if (frm.doc.selling_price_list && row.item_code) {
-          frappe.call({
-              method: 'multi_branch_utility.multi_branch_utility.utils.get_price_list_rate',
-              args: {
-                  'price_list': frm.doc.selling_price_list,
-                  'item': row.item_code
-              },
-              callback: function (r) {
-                  row.rate = r.message;
-              }
-          });
-        }
-        if (frm.doc.set_warehouse && row.item_code) {
-          frappe.call({
-              method: 'multi_branch_utility.multi_branch_utility.utils.get_available_qty',
-              args: {
-                  'warehouse': frm.doc.set_warehouse,
-                  'item': row.item_code
-              },
-              callback: function (r) {
-                  row.actual_qty = r.message;
-              }
-          });
-        }
-        if (frm.doc.customer && row.item_code) {
-            frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.utils.get_last_si_rate',
-                args: {
-                    'customer': frm.doc.customer,
-                    'item': row.item_code
-                },
-                callback: function (r) {
-                    row.previous_sales_price = r.message;
-                }
-            });
-            frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.utils.get_last_pr_rate',
-                args: {
-                    'item': row.item_code
-                },
-                callback: function (r) {
-                    row.previous_buying_rate = r.message;
-                }
-            });
-            frappe.call({
-                method: 'multi_branch_utility.multi_branch_utility.utils.get_avg_cost',
-                args: {
-                    'item': row.item_code
-                },
-                callback: function (r) {
-                    row.average_cost = r.message;
-                }
-            });
-        }
+				if(frm.doc.selling_price_list && frm.doc.set_warehouse && frm.doc.customer && row.item_code ){
+					frappe.call({
+						method: 'multi_branch_utility.multi_branch_utility.utils.get_item_details',
+						args: {
+								'price_list': frm.doc.selling_price_list,
+								'warehouse': frm.doc.set_warehouse,
+								'customer': frm.doc.customer,
+                'item': row.item_code
+						},
+						freeze: true,
+						freeze_message: __("Fetching item details"),
+						callback: function (r) {
+							if (r.message){
+								if(!row.qty){
+										row.qty = 0;
+								}
+								row.rate = r.message['price_list_rate'];
+								row.actual_qty = r.message['available_qty'];
+								row.previous_sales_price = r.message['last_si_rate'];
+								row.previous_buying_rate = r.message['last_pr_rate'];
+								row.average_cost = r.message['avg_cost'];
+								row.amount = row.qty*row.rate;
+								calculate_totals(frm);
+								frm.refresh_field('items');
+							}
+						}
+					});
+				}
+				calculate_totals(frm);
         frm.refresh_field('items');
     },
     qty: function(frm, cdt, cdn) {
@@ -157,6 +141,9 @@ frappe.ui.form.on('Invoice Tool Item', {
       if(row.qty) {
         row.amount = row.qty * row.rate ;
       }
+			else{
+				row.amount = 0
+			}
       frm.refresh_field('items');
       calculate_totals(frm)
     },
@@ -169,7 +156,7 @@ frappe.ui.form.on('Invoice Tool Item', {
       calculate_totals(frm)
     },
     items_remove: function(frm, cdt, cdn){
-      calculate_totals(frm);
+			calculate_totals(frm);
     }
 });
 
