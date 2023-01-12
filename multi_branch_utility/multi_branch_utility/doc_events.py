@@ -127,3 +127,11 @@ def sales_invoice_validate(doc, method):
 		defaults = get_print_format_and_lh(doc.doctype, doc.cost_center)
 		if defaults['letter_head']:
 			doc.letter_head = defaults['letter_head']
+
+@frappe.whitelist()
+def customer_validate(doc, method):
+	''' Method to validate Customer'''
+	if doc.tax_id:
+		is_num = doc.tax_id.isnumeric() #To check wether it is number or not
+		if not is_num or len(doc.tax_id)!=15: #Validating length of tax id
+			frappe.throw('Tax Id should have 15 digits number only.')

@@ -37,7 +37,8 @@ doctype_js = {
 	"Sales Invoice" : "public/js/sales_invoice.js",
 	"Stock Entry" : "public/js/stock_entry.js",
 	"Purchase Invoice" : "public/js/purchase_invoice.js",
-	"Item" : "public/js/item.js"
+	"Item" : "public/js/item.js",
+	"Customer" : "public/js/customer.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -126,6 +127,9 @@ doc_events = {
 	"Stock Entry": {
 		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.stock_entry_before_validate",
 	},
+	"Customer": {
+		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.customer_validate",
+	}
 }
 fixtures = ["Print Format", "Letter Head"]
 # Scheduled Tasks
