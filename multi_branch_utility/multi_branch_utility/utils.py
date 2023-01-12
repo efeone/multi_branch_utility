@@ -15,53 +15,90 @@ def get_mode_of_payment(payment_type, cost_center):
 
 @frappe.whitelist()
 def get_last_si_rate(customer, item):
-    if frappe.db.exists('Sales Invoice',{'customer':customer, 'docstatus': 1}):
-        customer_si = frappe.db.get_all('Sales Invoice', filters={'customer': customer, 'docstatus': 1})
-        for si in customer_si:
-            sales_invoice = frappe.get_doc('Sales Invoice', si.name)
-            for si_item in sales_invoice.items :
-                if si_item.item_code == item:
-                    return si_item.rate
-    return 0
+    last_si_rate = 0
+    query = '''
+        SELECT
+            sii.rate as last_si_rate
+        FROM
+            `tabSales Invoice` as si,
+            `tabSales Invoice Item` as sii
+        WHERE
+            si.customer = %(customer)s
+            AND si.docstatus = 1
+            AND sii.parent = si.name
+            AND sii.item_code = %(item)s
+    '''
+    return_data = frappe.db.sql(query.format(), { 'customer':customer, 'item':item}, as_dict = True)
+    if return_data:
+        last_si_rate = return_data[0].get('last_si_rate')
+    return last_si_rate
 
 @frappe.whitelist()
 def get_last_pr_rate(item):
-    if frappe.db.exists('Purchase Receipt',{'docstatus': 1}):
-        item_pr = frappe.db.get_all('Purchase Receipt', filters={'docstatus': 1})
-        for pr in item_pr:
-            purchase_receipt = frappe.get_doc('Purchase Receipt', pr.name)
-            for pr_item in purchase_receipt.items:
-                if pr_item.item_code == item:
-                    return pr_item.rate
-    return 0
+    last_pr_rate = 0
+    query = '''
+        SELECT
+            pri.rate as last_pr_rate
+        FROM
+            `tabPurchase Receipt` as pr,
+            `tabPurchase Receipt Item` as pri
+        WHERE
+            pr.docstatus = 1
+            AND pri.item_code = %(item)s
+            AND pri.parent = pr.name
+    '''
+    return_data = frappe.db.sql(query.format(), { 'item':item }, as_dict = True)
+    if return_data:
+        last_pr_rate = return_data[0].get('last_pr_rate')
+    return last_pr_rate
 
 @frappe.whitelist()
 def get_avg_cost(item):
     avg_cost = 0
-    if frappe.db.exists('Stock Ledger Entry',{'item_code':item}):
-        stock_ledger_entry = frappe.get_last_doc('Stock Ledger Entry', filters={'item_code':item})
-        avg_cost = stock_ledger_entry.valuation_rate
+    query = '''
+        SELECT
+            sle.valuation_rate as avg_cost
+        FROM
+            `tabStock Ledger Entry` as sle
+        WHERE
+            sle.item_code = %(item)s
+        ORDER BY
+            creation desc
+    '''
+    return_data = frappe.db.sql(query.format(), { 'item':item }, as_dict = True)
+    if return_data:
+        avg_cost = return_data[0].get('avg_cost')
     return avg_cost
-
 
 @frappe.whitelist()
 def get_price_list_rate(price_list, item):
     price_list_rate = 0
-    if frappe.db.exists('Item Price',{'price_list': price_list, 'item_code': item}):
-        item_price = frappe.get_last_doc('Item Price',{'price_list': price_list, 'item_code': item})
-        price_list_rate = item_price.price_list_rate
+    query = '''
+    SELECT
+        ip.price_list_rate as price_list_rate
+    FROM
+        `tabItem Price` as ip
+    WHERE
+        ip.price_list = %(price_list)s
+        AND ip.item_code = %(item)s
+    ORDER BY
+        creation desc
+    '''
+    return_data = frappe.db.sql(query.format(),{ 'price_list':price_list, 'item':item }, as_dict = True)
+    if return_data:
+        price_list_rate = return_data[0].get('price_list_rate')
     return price_list_rate
 
 @frappe.whitelist()
 def get_available_qty(warehouse, item):
     query = """
-		select
+		SELECT
             SUM(b.actual_qty) as product_stock
-		from
+		FROM
             `tabBin` as b
-		where
-			b.item_code = %(item_code)s AND
-			b.warehouse = %(warehouse)s
+		WHERE
+			b.item_code = %(item_code)s
+            AND b.warehouse = %(warehouse)s
 	"""
     return_data = frappe.db.sql(query.format(), { 'item_code': item, 'warehouse': warehouse }, as_dict=True)
     if return_data and return_data[0].product_stock:
@@ -119,4 +156,4 @@ def get_item_details(customer, item, price_list, warehouse):
     item_details['avg_cost'] = get_avg_cost(item)
     item_details['price_list_rate'] = get_price_list_rate(price_list, item)
     item_details['available_qty'] = get_available_qty(warehouse, item)
-    return item_details  
+    return item_details
