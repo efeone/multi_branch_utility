@@ -11,6 +11,7 @@
   "naming_series",
   "payment_type",
   "customer",
+  "tax_id",
   "customer_balance",
   "allocate_advances_automatically",
   "column_break_3",
@@ -61,14 +62,15 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.customer",
    "fieldname": "customer_balance",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "label": "Customer Balance",
    "read_only": 1
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.payment_type == 'CREDIT';",
+   "depends_on": "eval:doc.customer_balance < 0;",
    "fieldname": "allocate_advances_automatically",
    "fieldtype": "Check",
    "label": "Allocate Advances Automatically (FIFO)",
@@ -227,13 +229,20 @@
    "hidden": 1,
    "label": "Cost Center Abbr",
    "read_only": 1
+  },
+  {
+   "fetch_from": "customer.tax_id",
+   "fieldname": "tax_id",
+   "fieldtype": "Data",
+   "label": "Tax Id",
+   "read_only": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-12-29 09:17:40.187997",
+ "modified": "2023-01-16 07:10:58.994991",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Tool",

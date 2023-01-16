@@ -53,9 +53,14 @@ frappe.ui.form.on("Sales Invoice Tool", {
               cost_center: frm.doc.cost_center
             },
             callback: function(r) {
-              if(r.message.party_balance < 0) {
-                  frm.set_value('customer_balance', r.message.party_balance)
-                  frm.set_value('allocate_advances_automatically', 1)
+              if(r.message.party_balance) {
+								frm.set_value('customer_balance', r.message.party_balance)
+								if(r.message.party_balance < 0){
+										frm.set_value('allocate_advances_automatically', 1)
+								}
+								else {
+									frm.set_value('allocate_advances_automatically', 0)
+								}
               }
 							else {
 								frm.set_value('customer_balance', 0)
@@ -195,24 +200,25 @@ function make_buttons(frm){
 }
 
 function create_sales_invoice(frm){
-    frappe.db.insert({
-              doctype: 'Sales Invoice',
-              customer: frm.doc.customer,
-              payment_type: frm.doc.payment_type,
-        update_stock: frm.doc.update_stock,
-        outstanding_amount: frm.doc.outstanding_amount,
-        total: frm.doc.total,
-        grand_total: frm.doc.grand_total,
-        rounded_total: frm.doc.rounded_total,
-        rounding_adjustment: frm.doc.rounding_adjustment,
-              items: frm.doc.items,
-              docstatus: 1,
-        allocate_advances_automatically: frm.doc.allocate_advances_automatically
-          }).then(function(doc) {
-              frappe.show_alert('Sales Invoice Created..', 5);
-        print_invoice(doc)
-        frm.reload_doc();
-          });
+	frappe.db.insert({
+		doctype: 'Sales Invoice',
+		customer: frm.doc.customer,
+		payment_type: frm.doc.payment_type,
+		customer_balance: frm.doc.customer_balance,
+		update_stock: frm.doc.update_stock,
+		outstanding_amount: frm.doc.outstanding_amount,
+		total: frm.doc.total,
+		grand_total: frm.doc.grand_total,
+		rounded_total: frm.doc.rounded_total,
+		rounding_adjustment: frm.doc.rounding_adjustment,
+		items: frm.doc.items,
+		docstatus: 1,
+		allocate_advances_automatically: frm.doc.allocate_advances_automatically
+	}).then(function(doc) {
+		frappe.show_alert('Sales Invoice Created..', 5);
+		print_invoice(doc)
+		frm.reload_doc();
+	});
 }
 
 function check_mandatory_fields(frm){
