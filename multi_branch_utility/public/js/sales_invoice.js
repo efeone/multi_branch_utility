@@ -30,39 +30,26 @@ frappe.ui.form.on('Sales Invoice', {
                         frm.set_value('payment_type', data.message.payment_type)
                         frm.set_value('set_warehouse', data.message.default_warehouse)
                         frm.set_value('selling_price_list', data.message.default_price_list)
-                        frm.refresh_field('payment_type');
-                        frm.refresh_field('set_warehouse');
-                        frm.refresh_field('selling_price_list');
+                        // frm.refresh_field('payment_type');
+                        // frm.refresh_field('set_warehouse');
+                        // frm.refresh_field('selling_price_list');
                     }
                 }
             })
-            return frappe.call({
-              method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_party_details",
-              args: {
-                company: frm.doc.company,
-                party_type: 'Customer',
-                party: frm.doc.customer,
-                date: frm.doc.posting_date,
-                cost_center: frm.doc.cost_center
-              },
-              callback: function(r) {
-                if(r.message.party_balance) {
-                  frm.set_value('customer_balance', r.message.party_balance)
-                  if(r.message.party_balance < 0){
-                      frm.set_value('allocate_advances_automatically', 1)
-                  }
-                  else {
-                    frm.set_value('allocate_advances_automatically', 0)
-                  }
-                }
-                else {
-                  frm.set_value('customer_balance', 0)
-                  frm.set_value('allocate_advances_automatically', 0)
-                }
-                frm.refresh_field('customer_balance');
-                frm.refresh_field('allocate_advances_automatically');
-              }
-            });
+            // return frappe.call({
+            //   method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_party_details",
+            //   args: {
+            //     company: frm.doc.company,
+            //     party_type: 'Customer',
+            //     party: frm.doc.customer,
+            //     date: frm.doc.posting_date,
+            //     cost_center: frm.doc.cost_center
+            //   },
+            //   callback: function(r) {
+            //     if(r.message.party_balance) {
+            //       frm.set_value('customer_balance', r.message.party_balance)
+            //     }
+            // });
         }
     },
 });
