@@ -27,6 +27,8 @@ def get_last_si_rate(customer, item):
             AND si.docstatus = 1
             AND sii.parent = si.name
             AND sii.item_code = %(item)s
+        ORDER BY
+            si.creation desc
     '''
     return_data = frappe.db.sql(query.format(), { 'customer':customer, 'item':item}, as_dict = True)
     if return_data:
@@ -46,6 +48,8 @@ def get_last_pr_rate(item):
             pr.docstatus = 1
             AND pri.item_code = %(item)s
             AND pri.parent = pr.name
+        ORDER BY
+            pr.creation desc
     '''
     return_data = frappe.db.sql(query.format(), { 'item':item }, as_dict = True)
     if return_data:
