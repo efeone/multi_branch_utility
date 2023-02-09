@@ -18,6 +18,7 @@
   "company",
   "posting_date",
   "posting_time",
+  "allow_loss_sales",
   "items_section",
   "update_stock",
   "items",
@@ -234,13 +235,20 @@
    "fieldtype": "Data",
    "label": "Tax Id",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Allow Sales Rate can be less than Purchase Rate or Valuation Rate",
+   "fieldname": "allow_loss_sales",
+   "fieldtype": "Check",
+   "label": "Allow Loss Sales"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-02-09 09:08:48.918426",
+ "modified": "2023-02-09 09:51:57.069948",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Tool",
