@@ -10,7 +10,7 @@ frappe.ui.form.on("Sales Invoice Tool", {
       refresh: function(frm) {
         frm.set_value('payment_type','CASH');
         frm.set_value('posting_date', frappe.datetime.get_today());
-        frm.set_value('posting_time', frappe.datetime.now());
+        frm.set_value('posting_time', frappe.datetime.now_time());
         frm.disable_save();
         make_buttons(frm);
         frm.set_query("customer", function() {
