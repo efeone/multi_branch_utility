@@ -158,7 +158,7 @@ def validate_selling_price(self):
 			title=_("Invalid Selling Price"),
 		)
 
-	if self.get("is_return") or self.get("allow_loss_sales") or not frappe.db.get_single_value("Selling Settings", "validate_selling_price"):
+	if self.get("is_return") or self.get("allow_loss_sales"):
 		return
 
 	is_internal_customer = self.get("is_internal_customer")
