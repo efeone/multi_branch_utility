@@ -116,11 +116,13 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"before_validate": "multi_branch_utility.multi_branch_utility.doc_events.set_import_missing_values",
-		"validate": "multi_branch_utility.multi_branch_utility.doc_events.sales_invoice_validate",
+		"validate": ["multi_branch_utility.multi_branch_utility.doc_events.sales_invoice_validate",
+					"multi_branch_utility.multi_branch_utility.doc_events.calculate_item_tax_template"],
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment",
 		"autoname": "multi_branch_utility.multi_branch_utility.utils.invoice_auto_name"
 	},
 	"Purchase Invoice": {
+		"validate":"multi_branch_utility.multi_branch_utility.doc_events.calculate_item_tax_template",
 		"on_submit": "multi_branch_utility.multi_branch_utility.doc_events.make_payment",
 		"autoname": "multi_branch_utility.multi_branch_utility.utils.invoice_auto_name"
 	},

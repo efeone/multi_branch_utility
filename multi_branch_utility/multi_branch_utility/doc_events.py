@@ -220,3 +220,18 @@ def validate_selling_price(self):
 
 		if flt(item.base_net_rate) < flt(last_valuation_rate_in_sales_uom):
 			throw_message(item.idx, item.item_name, last_valuation_rate_in_sales_uom, "valuation rate")
+
+@frappe.whitelist()
+def calculate_item_tax_template(doc, method):
+	# item tax tax_percentage calculation
+	if doc.items:
+		for item in doc.items:
+			tax_percentage = 0
+			if item.item_tax_template:
+				if frappe.db.exists('Item Tax Template',item.item_tax_template):
+					tax_doc = frappe.get_doc('Item Tax Template',item.item_tax_template)
+					if tax_doc.taxes:
+						if tax_doc.name == item.item_tax_template and item.item_code:
+							for tax in tax_doc.taxes:
+								tax_percentage += tax.tax_rate
+			item.tax_percentage = tax_percentage
