@@ -7,7 +7,7 @@ frappe.ui.form.on('Sales Invoice', {
       print_invoice(frm.doc)
     },
     refresh(frm){
-        frm.set_value('update_stock', 1);
+        frm.set_value('update_stock', 0);
         frm.remove_custom_button('Fetch Timesheet')
         frm.set_query("customer", function() {
     			return {
