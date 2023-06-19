@@ -207,7 +207,7 @@ function create_sales_invoice(frm){
 		customer: frm.doc.customer,
 		payment_type: frm.doc.payment_type,
 		customer_balance: frm.doc.customer_balance,
-		update_stock: frm.doc.update_stock,
+		update_stock: 1,
 		outstanding_amount: frm.doc.outstanding_amount,
 		total: frm.doc.total,
 		grand_total: frm.doc.grand_total,
@@ -219,6 +219,7 @@ function create_sales_invoice(frm){
 		allow_loss_sales: frm.doc.allow_loss_sales,
 	}).then(function(doc) {
 		frappe.show_alert('Sales Invoice Created..', 5);
+    console.log(doc);
 		print_invoice(doc)
 		frm.reload_doc();
 	});
