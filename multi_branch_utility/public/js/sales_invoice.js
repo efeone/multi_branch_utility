@@ -90,9 +90,34 @@ frappe.ui.form.on('Sales Invoice Item', {
                 }
             })
         }
-    }
+    },
+    rate: function(frm, cdt, cdn) {
+	    console.log("rate on change")
+	    var d=locals[cdt][cdn];
+	    if(d.facevalue){
+	        var percent = 100 - (( 100*d.rate)/d.facevalue);
+    	    if (percent!=d.discount_percent){
+        	    frappe.model.set_value(cdt, cdn, "discount_percent", percent);
+        	    frm.refresh_fields();
+    	    }
+	    }
+	    else{
+	        frappe.model.set_value(cdt, cdn, "discount_percent", 0);
+        	frm.refresh_fields();
+	    }
+	},
+	discount_percent: function(frm, cdt, cdn) {
+	    console.log("discount on change")
+	    var d=locals[cdt][cdn];
+	    var rate = d.facevalue*(100-d.discount_percent)/100;
+	    if (rate != d.rate){
+	        frappe.model.set_value(cdt, cdn, "rate", rate);
+	        frm.refresh_fields();
+	    }
+	}
 
 });
+
 function print_invoice(doc){
   frappe.call({
       method: 'multi_branch_utility.multi_branch_utility.utils.get_print_format_and_lh',
