@@ -7,6 +7,11 @@ frappe.ui.form.on("Sales Invoice Tool", {
             const default_company = frappe.defaults.get_default('company');
             frm.set_value('company', default_company);
       },
+      scan_barcode: function(frm) {
+        console.log("FFFF");
+        const barcode_scanner = new erpnext.utils.BarcodeScanner({frm});
+        barcode_scanner.process_scan();
+      },
       refresh: function(frm) {
         frm.set_value('payment_type','CASH');
         frm.set_value('posting_date', frappe.datetime.get_today());

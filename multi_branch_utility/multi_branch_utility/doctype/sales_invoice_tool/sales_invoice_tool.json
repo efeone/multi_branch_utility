@@ -20,6 +20,7 @@
   "posting_time",
   "allow_loss_sales",
   "items_section",
+  "scan_barcode",
   "update_stock",
   "items",
   "totals_section",
@@ -242,13 +243,19 @@
    "fieldname": "allow_loss_sales",
    "fieldtype": "Check",
    "label": "Allow Loss Sales"
+  },
+  {
+   "fieldname": "scan_barcode",
+   "fieldtype": "Data",
+   "label": "Scan Barcode",
+   "options": "Barcode"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-02-09 09:51:57.069948",
+ "modified": "2023-07-12 08:12:41.503139",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Sales Invoice Tool",
