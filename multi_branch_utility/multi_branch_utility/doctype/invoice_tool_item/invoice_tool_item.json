@@ -30,6 +30,7 @@
   "average_cost",
   "column_break_14",
   "facevalue",
+  "minimum_value",
   "amount",
   "cost_center",
   "previous_purchase_cost"
@@ -250,11 +251,18 @@
    "fieldtype": "Currency",
    "label": "Facevalue",
    "read_only": 1
+  },
+  {
+   "fetch_from": "item_code.minimum_value",
+   "fieldname": "minimum_value",
+   "fieldtype": "Currency",
+   "label": "Minimum Value",
+   "read_only": 1
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2023-07-06 14:05:55.692827",
+ "modified": "2023-07-28 10:25:30.903162",
  "modified_by": "Administrator",
  "module": "Multi Branch Utility",
  "name": "Invoice Tool Item",

@@ -124,6 +124,7 @@ def stock_entry_before_validate(doc, method):
 @frappe.whitelist()
 def sales_invoice_validate(doc, method):
 	validate_selling_price(doc)
+	validate_minimum_value(doc)
 	if doc.cost_center:
 		defaults = get_print_format_and_lh(doc.doctype, doc.cost_center)
 		if defaults['letter_head']:
@@ -136,6 +137,13 @@ def customer_validate(doc, method):
 		is_num = doc.tax_id.isnumeric() #To check wether it is number or not
 		if not is_num or len(doc.tax_id)!=15: #Validating length of tax id
 			frappe.throw('Tax Id should have 15 digits number only.')
+
+@frappe.whitelist()
+def validate_minimum_value(self):
+	if doc.items:
+		for item in doc.items:
+			if item.minimum_value and  item.rate < item.minimum_value:
+				frappe.throw('Rate is less than Minimum Value')
 
 
 @frappe.whitelist()
