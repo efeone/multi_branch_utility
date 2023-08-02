@@ -140,8 +140,8 @@ def customer_validate(doc, method):
 
 @frappe.whitelist()
 def validate_minimum_value(self):
-	if doc.items:
-		for item in doc.items:
+	if self.items:
+		for item in self.items:
 			if item.minimum_value and  item.rate < item.minimum_value:
 				frappe.throw('Rate is less than Minimum Value')
 
