@@ -273,6 +273,11 @@ function check_mandatory_fields(frm){
     if (!frm.doc.selling_price_list) { frappe.throw(__('Selling Price List is Required!')); }
     if (!frm.doc.set_warehouse) { frappe.throw(__('Source Warehouse is Required!')); }
     if (!frm.doc.items.length) { frappe.throw(__('Item is Required!')); }
+    frm.doc.items.forEach(function(item){
+      if (!item.rate){
+        frappe.throw('Rate is mandatory for Item :' +  item.item_code)
+      }
+    });
     return 1
 }
 
