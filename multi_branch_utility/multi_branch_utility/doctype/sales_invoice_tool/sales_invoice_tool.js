@@ -190,7 +190,6 @@ frappe.ui.form.on('Invoice Tool Item', {
             frappe.model.set_value(cdt, cdn, "discount_percent", 0);
             frm.refresh_fields();
         }
-        console.log(d.rate);
         if(d.qty) {
           d.amount = d.qty * d.rate ;
         }
@@ -201,7 +200,7 @@ frappe.ui.form.on('Invoice Tool Item', {
 		discount_percent: function(frm, cdt, cdn) {
 		  var d=locals[cdt][cdn];
 		  var rate = d.facevalue*(100-d.discount_percent)/100;
-		  if (rate != d.rate){
+		  if (rate && rate != d.rate){
 		      frappe.model.set_value(cdt, cdn, "rate", rate);
 		      frm.refresh_fields();
 		  }
