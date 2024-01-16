@@ -8,7 +8,6 @@ frappe.ui.form.on("Sales Invoice Tool", {
             frm.set_value('company', default_company);
       },
       scan_barcode: function(frm) {
-        console.log("FFFF");
         const barcode_scanner = new erpnext.utils.BarcodeScanner({frm});
         barcode_scanner.process_scan();
       },
@@ -171,39 +170,23 @@ frappe.ui.form.on('Invoice Tool Item', {
 			calculate_totals(frm);
     },
 		rate: function(frm, cdt, cdn) {
-		  var d=locals[cdt][cdn];
-      if(d.minimum_value && d.rate < d.minimum_value){
-        d.rate = 0;
-        d.amount = 0;
-        calculate_totals(frm)
-        frappe.throw(__('Rate is less than Minimum Value'));
-      }
-      else{
-        if(d.facevalue){
-		      var percent = 100 - ((100 * d.rate)/d.facevalue);
-		      if (percent!=d.discount_percent){
-		          frappe.model.set_value(cdt, cdn, "discount_percent", percent);
-		          frm.refresh_fields();
-		      }
+      var d=locals[cdt][cdn];
+      if(d.rate > 0){
+        if(d.minimum_value && d.rate < d.minimum_value){
+          frappe.model.set_value(cdt, cdn, 'rate', 0)
+          // d.rate = 0;
+          d.amount = 0;
+          calculate_totals(frm)
+          frappe.throw(__('Rate is less than Minimum Value'));
         }
         else{
-            frappe.model.set_value(cdt, cdn, "discount_percent", 0);
-            frm.refresh_fields();
+          if(d.qty) {
+            d.amount = d.qty * d.rate ;
+          }
+          frm.refresh_field('items');
+          calculate_totals(frm)
         }
-        if(d.qty) {
-          d.amount = d.qty * d.rate ;
-        }
-        frm.refresh_field('items');
-        calculate_totals(frm)
       }
-		},
-		discount_percent: function(frm, cdt, cdn) {
-		  var d=locals[cdt][cdn];
-		  var rate = d.facevalue*(100-d.discount_percent)/100;
-		  if (rate && rate != d.rate){
-		      frappe.model.set_value(cdt, cdn, "rate", rate);
-		      frm.refresh_fields();
-		  }
 		}
 });
 
@@ -273,7 +256,7 @@ function check_mandatory_fields(frm){
     if (!frm.doc.set_warehouse) { frappe.throw(__('Source Warehouse is Required!')); }
     if (!frm.doc.items.length) { frappe.throw(__('Item is Required!')); }
     frm.doc.items.forEach(function(item){
-      if (!item.rate){
+      if (item.item_code && !item.rate){
         frappe.throw('Rate is mandatory for Item :' +  item.item_code)
       }
     });
